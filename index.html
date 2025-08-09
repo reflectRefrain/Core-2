@@ -3,372 +3,799 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CompTIA A+ 220-1102 Study Tracker</title>
+<title>CompTIA A+ 220-1102 Study Tracker — Pro Build</title>
 <style>
-    body {
-        font-family: "Segoe UI", Tahoma, sans-serif;
-        font-size: 16px;
-        line-height: 1.5;
-        color: #333;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom, #d6f0ff 0%, #f0fff4 100%);
-        background-color: #f0fff4;
+    :root{
+        --ink:#333; --muted:#555; --bg1:#d6f0ff; --bg2:#f0fff4; --panel:rgba(255,255,255,.9);
+        --hi:#e8f4ff; --bar:#90c695; --warn:#b00020; --note:#ffd42a; --link:#0645AD;
     }
-    header {
-        text-align: center;
-        padding: 1em;
-        background: rgba(255,255,255,0.8);
-    }
-    header h1 { font-size: 1.5em; margin: 0.2em; }
-    header p { margin: 0.2em; font-size: 1em; }
-    .progress-container { max-width: 600px; margin: 0.5em auto; text-align: center; }
-    #progress-bar-bg {
-        width: 90%; max-width: 500px; height: 20px; background: #e0e0e0;
-        border-radius: 10px; margin: 0.5em auto; overflow: hidden;
-    }
-    #progress-bar { height: 100%; width: 0%; background: #90c695; transition: width 0.3s ease; }
-    #progress-text { font-size: 0.9em; }
-    nav { text-align: center; margin: 1em auto; }
-    nav a {
-        color: #005080; text-decoration: none; margin: 0 0.5em; font-weight: bold;
-    }
-    nav a:hover { text-decoration: underline; }
-    .resources {
-        max-width: 800px; margin: 1em auto; background: rgba(255,255,255,0.8);
-        padding: 0.5em 1em; border-radius: 5px;
-    }
-    .resources h2 { font-size: 1.2em; margin-top: 0; }
-    .resources ul { list-style: none; padding-left: 1em; }
-    .resources li { margin: 0.3em 0; }
-    .resources a { color: #0645AD; }
-    main { max-width: 900px; margin: 1em auto; padding: 0 0.5em; }
-    details { margin: 0.5em 0; background: rgba(255,255,255,0.9); border-radius: 5px; }
-    details summary {
-        cursor: pointer; padding: 0.6em 0.8em; font-weight: bold; font-size: 1.05em;
-        outline: none; background: #e8f4ff; border-radius: 5px;
-    }
-    details[open] summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
-    .section-content { padding: 0.6em 1em 0.8em 1.2em; }
-    .section-content ul { margin: 0.3em 0 0.6em; }
-    .section-done {
-        display: inline-flex; align-items: center; gap: 0.4em; margin: 0.4em 0 0.8em;
-    }
-    .section-done input { transform: scale(1.2); }
-    .note {
-        background: #fff9e6; border-left: 4px solid #ffd42a; padding: 0.4em 0.6em;
-        margin: 0.6em 0; font-size: 0.95em; border-radius: 3px;
-    }
-    .note:before { content: "💡 "; }
-    #congrats {
-        display: none; text-align: center; margin: 2em; font-size: 1.2em; color: #2a662a;
-    }
-    .time { color: #555; font-size: 0.95em; }
+    body{font-family:"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.5;color:var(--ink);
+        margin:0;background:linear-gradient(to bottom,var(--bg1) 0%,var(--bg2) 100%); }
+    header{text-align:center;padding:1em;background:rgba(255,255,255,.8)}
+    header h1{font-size:1.5em;margin:.2em}
+    .wrap{max-width:1000px;margin:0 auto;padding:0 .5em}
+    .progress-container{max-width:650px;margin:.5em auto;text-align:center}
+    #progress-bar-bg{width:90%;max-width:520px;height:20px;background:#e0e0e0;border-radius:10px;margin:.5em auto;overflow:hidden}
+    #progress-bar{height:100%;width:0%;background:var(--bar);transition:width .3s ease}
+    #progress-text{font-size:.9em}
+    nav{text-align:center;margin:1em auto}
+    nav a{color:#005080;text-decoration:none;margin:0 .5em;font-weight:bold}
+    nav a:hover{text-decoration:underline}
+    .panel{background:var(--panel);border-radius:6px;padding:.8em;margin:1em 0}
+    details{margin:.6em 0;background:var(--panel);border-radius:6px}
+    details summary{cursor:pointer;padding:.6em .8em;font-weight:700;font-size:1.05em;background:var(--hi);border-radius:6px}
+    details[open] summary{border-bottom-left-radius:0;border-bottom-right-radius:0}
+    .section-content{padding:.6em 1em .8em 1.2em}
+    .section-done{display:inline-flex;align-items:center;gap:.4em;margin:.4em 0 .6em}
+    .section-done input{transform:scale(1.2)}
+    .time{color:var(--muted);font-size:.95em}
+    .note{background:#fff9e6;border-left:4px solid var(--note);padding:.4em .6em;margin:.6em 0;border-radius:3px}
+    .note::before{content:"💡 ";}
+
+    /* Domain Mastery */
+    .domains{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8em}
+    .domain-card{background:var(--panel);border-radius:6px;padding:.6em .8em}
+    .bar-bg{height:10px;background:#e7e7e7;border-radius:6px;overflow:hidden;margin:.3em 0}
+    .bar{height:100%;width:0;background:var(--bar)}
+
+    /* Top 50 */
+    .facts li{display:flex;align-items:center;gap:.5em;margin:.35em 0}
+    .facts button{font-size:.8em}
+    .tag{display:inline-block;background:#eef;border:1px solid #cfe;border-radius:3px;padding:.05em .35em;margin-left:.3em;font-size:.8em}
+
+    /* PBQ */
+    .pbq{display:grid;grid-template-columns:1fr;gap:.8em}
+    .draglist{display:flex;gap:.6em;flex-wrap:wrap}
+    .pill{padding:.35em .6em;background:#eef;border:1px dashed #aac;border-radius:999px;cursor:grab}
+    .dropzone{min-height:46px;border:2px dashed #aac;border-radius:6px;padding:.4em .5em;background:#fafcff}
+    .cli input{width:100%;padding:.5em;border:1px solid #ccc;border-radius:4px}
+    .ok{color:#2a662a;font-weight:700}.bad{color:var(--warn);font-weight:700}
+
+    /* Warnings */
+    .pitfall{border-left:4px solid var(--warn);background:#fff3f3;padding:.5em .7em;margin:.4em 0;border-radius:3px}
+    .pitfall::before{content:"⚠️ ";}
+
+    /* Acronym drill */
+    .acronym-box{display:grid;gap:.5em}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.8em}
+
+    /* Buttons */
+    .btn{background:#0b64b0;color:#fff;border:0;border-radius:4px;padding:.45em .7em;cursor:pointer}
+    .btn.alt{background:#2a662a}
+    .btn.ghost{background:transparent;border:1px solid #0b64b0;color:#0b64b0}
+    .small{font-size:.85em}
+
+    /* Footer/Checklist */
+    .checklist li{margin:.35em 0}
+    #congrats{display:none;text-align:center;margin:2em;font-size:1.2em;color:#2a662a}
 </style>
 </head>
 <body>
-
 <header>
-    <h1>CompTIA A+ Core 2 (220-1102) – Study Tracker</h1>
-    <p>Your personal outline-based tracker for Core 2</p>
+  <div class="wrap">
+    <h1>CompTIA A+ Core 2 (220-1102) — Study Tracker</h1>
+    <p>Your 3-week outline, mastery map, and practice hub</p>
     <div class="progress-container">
-        <div id="progress-bar-bg"><div id="progress-bar"></div></div>
-        <div id="progress-text">0% complete</div>
-        <div id="countdown"></div>
+      <div id="progress-bar-bg"><div id="progress-bar"></div></div>
+      <div id="progress-text">0% complete</div>
+      <div id="countdown"></div>
     </div>
+  </div>
 </header>
 
+<div class="wrap">
 <nav>
-    <a href="#sec1">Ch.1 Intro</a> |
-    <a href="#sec2">Ch.2 OS Basics</a> |
-    <a href="#sec9">Ch.9 Storage</a> |
-    <a href="#sec11">Ch.11 Install</a> |
-    <a href="#sec15">Ch.15 CLI</a> |
-    <a href="#sec17_21">Networking</a> |
-    <a href="#sec23_25">Mobile</a> |
-    <a href="#sec27_28">Sec & Docs</a> |
-    <a href="#final_prep">Final Prep</a>
+  <a href="#mastery">Mastery Map</a> |
+  <a href="#outline">Chapters</a> |
+  <a href="#facts">Top 50</a> |
+  <a href="#pbq">PBQ Lab</a> |
+  <a href="#daily">Daily Check-In</a> |
+  <a href="#acronyms">Acronym Drill</a> |
+  <a href="#cheats">Cheat Sheet</a> |
+  <a href="#final72">Final 72h</a> |
+  <a href="#examday">Exam Day</a>
 </nav>
 
-<div class="resources">
-    <h2>Study Resources</h2>
-    <ul>
-        <li><a href="https://www.udemy.com/course/comptia-aplus-core-2/" target="_blank">Udemy — Mike Meyers’ A+ Core 2</a></li>
-        <li><a href="https://www.udemy.com/course/comptia-a-220-1102-core-2-practice-exams-new-for-2022/" target="_blank">Udemy — Jason Dion Core 2 Practice Exams</a></li>
-        <li><a href="https://www.professormesser.com/free-a-plus-training/220-1102/220-1102-video/220-1102-training-course/" target="_blank">Professor Messer — Free Core 2 Course</a></li>
-        <li><a href="https://certblaster.com/wp-content/uploads/2022/11/CompTIA-A-220-1102-Exam-Objectives.pdf" target="_blank">Official 220-1102 Exam Objectives (PDF)</a></li>
-        <li><a href="https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests#CompTIA_A%2B_Certification_Exam_Core_2_(220-1102)_Practice_Tests" target="_blank">ExamCompass — Free Core 2 Quizzes</a></li>
-    </ul>
-</div>
+<!-- Study Resources -->
+<section class="panel">
+  <h2>Study Resources</h2>
+  <ul>
+    <li><a href="https://www.udemy.com/course/comptia-aplus-core-2/" target="_blank">Udemy — Mike Meyers’ A+ Core 2</a></li>
+    <li><a href="https://www.udemy.com/course/comptia-a-220-1102-core-2-practice-exams-new-for-2022/" target="_blank">Udemy — Jason Dion Core 2 Practice Exams</a></li>
+    <li><a href="https://www.professormesser.com/free-a-plus-training/220-1102/220-1102-video/220-1102-training-course/" target="_blank">Professor Messer — Free Core 2 Course</a></li>
+    <li><a href="https://certblaster.com/wp-content/uploads/2022/11/CompTIA-A-220-1102-Exam-Objectives.pdf" target="_blank">Official 220-1102 Exam Objectives (PDF)</a></li>
+    <li><a href="https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests#CompTIA_A%2B_Certification_Exam_Core_2_(220-1102)_Practice_Tests" target="_blank">ExamCompass — Free Core 2 Quizzes</a></li>
+  </ul>
+</section>
 
-<main>
+<!-- 1) Domain Mastery Map -->
+<section id="mastery" class="panel">
+  <h2>Domain Mastery Map</h2>
+  <div class="domains" id="domain-cards">
+    <!-- Filled by JS -->
+  </div>
+  <p class="small">Tip: your domain progress is computed from the chapter completion checkboxes + your quiz accuracy below.</p>
+</section>
 
-    <!-- Ch.1 -->
-    <details id="sec1" open>
-        <summary>Chapter 1 — Introduction</summary>
-        <div class="section-content">
-            <ul>
-                <li>1. What is the CompTIA A+? <span class="time">2 min</span></li>
-                <li>2. Why Get CompTIA A+ Certified? <span class="time">5 min</span></li>
-                <li>3. How to Take the A+ Exam <span class="time">2 min</span></li>
-                <li>4. What's on the Core 2 Exam? <span class="time">4 min</span></li>
-                <li>5. How to Pass the A+ Exams <span class="time">2 min</span></li>
-                <li>6. How to Use This Video Course <span class="time">2 min</span></li>
-                <li>7. Professional Communication, Part 1 <span class="time">6 min</span></li>
-                <li>8. Professional Communication, Part 2 <span class="time">7 min</span></li>
-                <li>9. Dealing with Difficult Customers <span class="time">5 min</span></li>
-                <li>10. Physical Safety <span class="time">7 min</span></li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec1-done"><label for="sec1-done">Mark Chapter 1 complete (Quiz 1 done)</label></div>
-        </div>
-    </details>
+<!-- 2) Chapter Outline with pitfalls + notes (condensed) -->
+<section id="outline">
+  <details id="sec1" data-domain="OP" open>
+    <summary>Chapter 1 — Introduction</summary>
+    <div class="section-content">
+      <ul>
+        <li>1. What is the CompTIA A+? <span class="time">2 min</span></li>
+        <li>2. Why Get CompTIA A+ Certified? <span class="time">5 min</span></li>
+        <li>3. How to Take the A+ Exam <span class="time">2 min</span></li>
+        <li>4. What's on the Core 2 Exam? <span class="time">4 min</span></li>
+        <li>5–10. Study approach, communication, safety <span class="time">various</span></li>
+      </ul>
+      <div class="pitfall">Don’t skip exam logistics. Know ID rules, break policy, flagging questions, PBQ placement.</div>
+      <div class="note"><strong>Why this matters:</strong> Passing strategy prevents time sinks on PBQs and keeps you calm under the clock.</div>
+      <div class="section-done"><input type="checkbox" id="sec1-done"><label for="sec1-done">Mark Chapter 1 complete (Quiz 1 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.2 -->
-    <details id="sec2">
-        <summary>Chapter 2 — Safety & OS Basics</summary>
-        <div class="section-content">
-            <ul>
-                <li>11. Common Safety Procedures <span class="time">4 min</span></li>
-                <li>12. What Is an Operating System? <span class="time">9 min</span></li>
-                <li>13. Users and Super Users <span class="time">5 min</span></li>
-                <li>14. Why Windows? <span class="time">8 min</span></li>
-                <li>15. Touring Windows 10 and 11 <span class="time">5 min</span></li>
-                <li>16. Touring macOS <span class="time">6 min</span></li>
-                <li>17. Touring Linux <span class="time">8 min</span></li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec2-done"><label for="sec2-done">Mark Chapter 2 complete (Quiz 2 done)</label></div>
-        </div>
-    </details>
+  <details id="sec2" data-domain="OS">
+    <summary>Chapter 2 — Safety & OS Basics</summary>
+    <div class="section-content">
+      <ul>
+        <li>11–17. Safety, what an OS is, Windows/macOS/Linux basics</li>
+      </ul>
+      <div class="pitfall">Students mix up Linux/macOS permission bits with NTFS permissions; keep them separate in your notes.</div>
+      <div class="note">Real world: You’ll flip between GUI and CLI tools daily—learn both paths for the same task.</div>
+      <div class="section-done"><input type="checkbox" id="sec2-done"><label for="sec2-done">Mark Chapter 2 complete (Quiz 2 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.7 -->
-    <details id="sec7">
-        <summary>Chapter 7 — Power</summary>
-        <div class="section-content">
-            <ul>
-                <li>18. Power Protection <span class="time">9 min</span></li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec7-done"><label for="sec7-done">Mark Chapter 7 complete (Quiz 3 done)</label></div>
-        </div>
-    </details>
+  <details id="sec7" data-domain="OP">
+    <summary>Chapter 7 — Power</summary>
+    <div class="section-content">
+      <ul><li>18. Power Protection</li></ul>
+      <div class="pitfall">UPS ≠ surge protector. Know when each is appropriate and VA sizing basics.</div>
+      <div class="section-done"><input type="checkbox" id="sec7-done"><label for="sec7-done">Mark Chapter 7 complete (Quiz 3 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.8 -->
-    <details id="sec8">
-        <summary>Chapter 8 — Boot & Storage (Intro)</summary>
-        <div class="section-content">
-            <ul>
-                <li>19. Boot Order <span class="time">7 min</span></li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec8-done"><label for="sec8-done">Mark Chapter 8 complete (Quiz 4 done)</label></div>
-        </div>
-    </details>
+  <details id="sec8" data-domain="OS">
+    <summary>Chapter 8 — Boot & Storage (Intro)</summary>
+    <div class="section-content">
+      <ul><li>19. Boot Order</li></ul>
+      <div class="pitfall">UEFI vs Legacy: confusing boot media causes install failures. Verify firmware mode first.</div>
+      <div class="section-done"><input type="checkbox" id="sec8-done"><label for="sec8-done">Mark Chapter 8 complete (Quiz 4 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.9 -->
-    <details id="sec9">
-        <summary>Chapter 9 — Storage Management</summary>
-        <div class="section-content">
-            <ul>
-                <li>20–30. Partitioning, MBR vs GPT, File Systems, Formatting, Dynamic Disks, Storage Spaces, Encryption, Maintenance <span class="time">various</span></li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec9-done"><label for="sec9-done">Mark Chapter 9 complete (Quiz 5 done)</label></div>
-        </div>
-    </details>
+  <details id="sec9" data-domain="OS">
+    <summary>Chapter 9 — Storage Management</summary>
+    <div class="section-content">
+      <ul><li>20–30. MBR/GPT, file systems, formatting, dynamic disks, Storage Spaces, encryption, maintenance</li></ul>
+      <div class="pitfall">ExFAT vs NTFS vs ext4 vs APFS comes up—know default platform use-cases and limits.</div>
+      <div class="section-done"><input type="checkbox" id="sec9-done"><label for="sec9-done">Mark Chapter 9 complete (Quiz 5 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.10 -->
-    <details id="sec10">
-        <summary>Chapter 10 — Peripherals</summary>
-        <div class="section-content">
-            <ul>
-                <li>31. Understanding USB <span class="time">11 min</span></li>
-                <li>32. Webcams and Videoconferencing <span class="time">3 min</span></li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec10-done"><label for="sec10-done">Mark Chapter 10 complete (Quiz 6 done)</label></div>
-        </div>
-    </details>
+  <details id="sec10" data-domain="OS">
+    <summary>Chapter 10 — Peripherals</summary>
+    <div class="section-content">
+      <ul><li>31–32. USB, webcams/videoconf</li></ul>
+      <div class="section-done"><input type="checkbox" id="sec10-done"><label for="sec10-done">Mark Chapter 10 complete (Quiz 6 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.11 -->
-    <details id="sec11">
-        <summary>Chapter 11 — Installing Operating Systems</summary>
-        <div class="section-content">
-            <ul>
-                <li>33–39. Windows 10/11 Features, Boot Methods, Install/Upgrade, Post-Install, Linux Install, macOS Upgrade</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec11-done"><label for="sec11-done">Mark Chapter 11 complete (Quiz 7 done)</label></div>
-        </div>
-    </details>
+  <details id="sec11" data-domain="OS">
+    <summary>Chapter 11 — Installing Operating Systems</summary>
+    <div class="section-content">
+      <ul><li>33–39. Win 10/11 features, boot, install/upgrade, post-install, Linux/macOS update</li></ul>
+      <div class="pitfall">Upgrades fail for lack of space or wrong edition. Confirm edition/arch/feature parity first.</div>
+      <div class="note">Why this matters: This is daily IT—clean installs, in-place upgrades, and recovery when they go sideways.</div>
+      <div class="section-done"><input type="checkbox" id="sec11-done"><label for="sec11-done">Mark Chapter 11 complete (Quiz 7 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.12 -->
-    <details id="sec12">
-        <summary>Chapter 12 — OS Tools</summary>
-        <div class="section-content">
-            <ul>
-                <li>40–45. Task Manager, Control Panel, Settings, MMC, Registry, macOS Core Tools</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec12-done"><label for="sec12-done">Mark Chapter 12 complete (Quiz 8 done)</label></div>
-        </div>
-    </details>
+  <details id="sec12" data-domain="OS">
+    <summary>Chapter 12 — OS Tools</summary>
+    <div class="section-content">
+      <ul><li>40–45. Task Manager, Control Panel/Settings, MMC, Registry, macOS tools</li></ul>
+      <div class="pitfall">Regedit is powerful—don’t confuse HKLM vs HKCU. Changes can be user-scoped only.</div>
+      <div class="section-done"><input type="checkbox" id="sec12-done"><label for="sec12-done">Mark Chapter 12 complete (Quiz 8 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.13 -->
-    <details id="sec13">
-        <summary>Chapter 13 — Users, Permissions, and Security</summary>
-        <div class="section-content">
-            <ul>
-                <li>46–52. Users/Groups, NTFS, *nix Perms, File Explorer, Sharing, Security Policies</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec13-done"><label for="sec13-done">Mark Chapter 13 complete (Quiz 9 done)</label></div>
-        </div>
-    </details>
+  <details id="sec13" data-domain="SEC">
+    <summary>Chapter 13 — Users, Permissions, Security</summary>
+    <div class="section-content">
+      <ul><li>46–52. Users/Groups, NTFS, *nix perms, sharing, security policies</li></ul>
+      <div class="pitfall">NTFS vs Share permissions: effective = most restrictive. It’s an exam favorite.</div>
+      <div class="section-done"><input type="checkbox" id="sec13-done"><label for="sec13-done">Mark Chapter 13 complete (Quiz 9 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.14 -->
-    <details id="sec14">
-        <summary>Chapter 14 — Maintenance & Backup</summary>
-        <div class="section-content">
-            <ul>
-                <li>53–58. OS Maintenance, App Workflows, Backup (Win/macOS/Linux)</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec14-done"><label for="sec14-done">Mark Chapter 14 complete (Quiz 10 done)</label></div>
-        </div>
-    </details>
+  <details id="sec14" data-domain="OP">
+    <summary>Chapter 14 — Maintenance & Backup</summary>
+    <div class="section-content">
+      <ul><li>53–58. Maintenance, apps, backup approaches</li></ul>
+      <div class="note">Why this matters: Ransomware, failed updates, and user error make backup strategy non-negotiable.</div>
+      <div class="section-done"><input type="checkbox" id="sec14-done"><label for="sec14-done">Mark Chapter 14 complete (Quiz 10 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.15 -->
-    <details id="sec15">
-        <summary>Chapter 15 — Command Line & Scripting</summary>
-        <div class="section-content">
-            <ul>
-                <li>59–70. CLI Basics, Files/Folders/Drives, Copy Tools, Permissions, Advanced Win/*nix Commands, Scripting</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec15-done"><label for="sec15-done">Mark Chapter 15 complete (Quiz 11 done)</label></div>
-        </div>
-    </details>
+  <details id="sec15" data-domain="OS">
+    <summary>Chapter 15 — Command Line & Scripting</summary>
+    <div class="section-content">
+      <ul><li>59–70. CLI basics, copy tools, permissions, advanced Win/*nix, scripting</li></ul>
+      <div class="pitfall">Don’t mix PowerShell cmdlets with CMD commands. Watch syntax (Get-Service vs sc).</div>
+      <div class="section-done"><input type="checkbox" id="sec15-done"><label for="sec15-done">Mark Chapter 15 complete (Quiz 11 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Ch.16 -->
-    <details id="sec16">
-        <summary>Chapter 16 — Troubleshooting OS Issues</summary>
-        <div class="section-content">
-            <ul>
-                <li>71–76. WinRE, Startup Options, Boot Troubles, GUI/App Troubles, Kernel Panic</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec16-done"><label for="sec16-done">Mark Chapter 16 complete (Quiz 12 done)</label></div>
-        </div>
-    </details>
+  <details id="sec16" data-domain="TS">
+    <summary>Chapter 16 — Troubleshooting OS</summary>
+    <div class="section-content">
+      <ul><li>71–76. WinRE, startup options, boot/app issues, kernel panic</li></ul>
+      <div class="pitfall">Skip-theory syndrome: always state a probable cause before taking action.</div>
+      <div class="section-done"><input type="checkbox" id="sec16-done"><label for="sec16-done">Mark Chapter 16 complete (Quiz 12 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Networking (17–21) -->
-    <details id="sec17_21">
-        <summary>Ch. 17–21 — Networking Fundamentals</summary>
-        <div class="section-content">
-            <ul>
-                <li>77–96. TCP/IP, Subnetting, Special IPs, NAT, DHCP, Connections, DNS, Workgroups/AD, Routers, Firewalls, Port Forwarding, VLANs</li>
-                <li>97–101. WAP Setup, Wireless Encryption, Wi-Fi Connections, Enterprise Wireless, Wireless Troubleshooting</li>
-                <li>102–110. Telnet/SSH, RDP, WWW, FTP, Proxies, VPNs, IoT, Internet Troubles, Browser Security</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec17_21-done"><label for="sec17_21-done">Mark Networking complete (Quizzes 13–15 done)</label></div>
-        </div>
-    </details>
+  <details id="sec17_21" data-domain="OS">
+    <summary>Ch. 17–21 — Networking Fundamentals</summary>
+    <div class="section-content">
+      <ul>
+        <li>77–96. TCP/IP, subnetting, NAT/DHCP/DNS, routers, firewalls, VLANs</li>
+        <li>97–101. WAP setup, encryption, Wi-Fi connections, enterprise wireless, troubleshooting</li>
+        <li>102–110. Telnet/SSH, RDP, web/FTP, proxies, VPN, IoT, browser security</li>
+      </ul>
+      <div class="pitfall">Don’t confuse WPA2-Enterprise (802.1X/RADIUS) with WPA2-Personal (pre-shared key).</div>
+      <div class="section-done"><input type="checkbox" id="sec17_21-done"><label for="sec17_21-done">Mark Networking complete (Quizzes 13–15 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Mobile (23–25) -->
-    <details id="sec23_25">
-        <summary>Ch. 23–25 — Mobile Devices</summary>
-        <div class="section-content">
-            <ul>
-                <li>111. Power Management</li>
-                <li>112–114. Android, iOS, Virtual Reality</li>
-                <li>115–118. Mobile Maintenance, Email, Security, Troubleshooting</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec23_25-done"><label for="sec23_25-done">Mark Mobile complete (Quizzes 16–18 done)</label></div>
-        </div>
-    </details>
+  <details id="sec23_25" data-domain="TS">
+    <summary>Ch. 23–25 — Mobile Devices</summary>
+    <div class="section-content">
+      <ul><li>111–118. Power mgmt, Android/iOS, VR, maintenance, email, security, troubleshooting</li></ul>
+      <div class="pitfall">iOS profiles vs Android MDM—different tooling, similar objectives. Know the admin path.</div>
+      <div class="section-done"><input type="checkbox" id="sec23_25-done"><label for="sec23_25-done">Mark Mobile complete (Quizzes 16–18 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Security & Documentation (27–28) -->
-    <details id="sec27_28">
-        <summary>Ch. 27–28 — Security & Documentation</summary>
-        <div class="section-content">
-            <ul>
-                <li>119–126. Threats, Countermeasures, Physical Security, Auth/MFA, Malware & Anti-Malware, Social Engineering</li>
-                <li>127–130. Licensing, Incident Response, Environmental Controls, Malware in Action</li>
-                <li>131–136. Docs & Data, Change Mgmt, Backup, Recycling/Data Destruction, Ticketing</li>
-            </ul>
-            <div class="section-done"><input type="checkbox" id="sec27_28-done"><label for="sec27_28-done">Mark Security & Docs complete (Quizzes 19–20 done)</label></div>
-        </div>
-    </details>
+  <details id="sec27_28" data-domain="SEC">
+    <summary>Ch. 27–28 — Security & Documentation</summary>
+    <div class="section-content">
+      <ul>
+        <li>119–126. Threats, anti-malware, MFA, social engineering</li>
+        <li>127–136. Licensing, incident response, env controls, docs/data, change mgmt, backup, recycling, ticketing</li>
+      </ul>
+      <div class="pitfall">RADIUS encrypts password only; TACACS+ encrypts entire payload. Common trick question.</div>
+      <div class="section-done"><input type="checkbox" id="sec27_28-done"><label for="sec27_28-done">Mark Security & Docs complete (Quizzes 19–20 done)</label></div>
+    </div>
+  </details>
 
-    <!-- Final Prep -->
-    <details id="final_prep">
-        <summary>Final Prep</summary>
-        <div class="section-content">
-            <ul>
-                <li>Practice Test 1 — Core 2 Practice Exam</li>
-                <li>Bonus Video <span class="time">7 min</span></li>
-            </ul>
-            <div class="note">Score your practice test, log weak areas, and do a focused 30–60 min refresh on those only.</div>
-            <div class="section-done"><input type="checkbox" id="final_prep-done"><label for="final_prep-done">Mark Final Prep complete</label></div>
-        </div>
-    </details>
+  <details id="final_prep" data-domain="OP">
+    <summary>Final Prep</summary>
+    <div class="section-content">
+      <ul>
+        <li>Practice Test 1 — Core 2 Practice Exam</li>
+        <li>Bonus Video <span class="time">7 min</span></li>
+      </ul>
+      <div class="note">Score your practice test, log weak areas, do a focused 30–60 min refresh on those only.</div>
+      <div class="section-done"><input type="checkbox" id="final_prep-done"><label for="final_prep-done">Mark Final Prep complete</label></div>
+    </div>
+  </details>
 
-    <div id="congrats">🎉 All sections completed! You’re ready for the exam. 🎉</div>
-</main>
+  <div id="congrats">🎉 All sections completed! You’re ready for the exam. 🎉</div>
+</section>
+
+<!-- 3) Top 50 Must-Know Facts -->
+<section id="facts" class="panel">
+  <h2>Top 50 Must-Know Facts</h2>
+  <p class="small">Mark “Mastered” to remove from rotation. Click ⭐ to add to your personal Cheat Sheet.</p>
+  <ul id="facts-list" class="facts"></ul>
+</section>
+
+<!-- 4) PBQ Sandbox -->
+<section id="pbq" class="panel">
+  <h2>PBQ Simulation Lab</h2>
+  <div class="pbq">
+    <div>
+      <h3>Firewall Rule Ordering (Drag & Drop)</h3>
+      <p class="small">Goal: Block RDP from 10.0.0.0/8, allow HTTPS out, then default deny.</p>
+      <div class="draglist" id="firewall-pool"></div>
+      <div class="dropzone" id="firewall-target" aria-label="Drop rules here in order"></div>
+      <button class="btn small" id="fw-check">Check Order</button>
+      <div id="fw-result"></div>
+    </div>
+    <div class="cli">
+      <h3>CLI Quick Validator</h3>
+      <p class="small">Try: <code>sfc /scannow</code>, <code>ipconfig /all</code>, <code>gpupdate /force</code>, <code>chkdsk /f</code>.</p>
+      <input id="cli-input" placeholder="Type a command and press Enter">
+      <div id="cli-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5) Daily 5-Question Check-In -->
+<section id="daily" class="panel">
+  <h2>Daily 5-Question Check-In</h2>
+  <div id="daily-quiz"></div>
+  <button class="btn" id="new-quiz">New 5 Questions</button>
+  <button class="btn ghost small" id="reset-quiz-stats">Reset Quiz Stats</button>
+  <div class="small" id="quiz-stats"></div>
+</section>
+
+<!-- 6) Acronym Speed Drill -->
+<section id="acronyms" class="panel">
+  <h2>Acronym Speed Drill</h2>
+  <div class="grid2 acronym-box">
+    <div>
+      <div><strong>Prompt:</strong> <span id="acr-current">—</span></div>
+      <input id="acr-answer" placeholder="Type full term and press Enter">
+      <div id="acr-feedback"></div>
+      <button class="btn small" id="acr-next">Next</button>
+    </div>
+    <div>
+      <div><strong>Stats:</strong></div>
+      <div id="acr-stats" class="small">—</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7) Cheat Sheet Builder -->
+<section id="cheats" class="panel">
+  <h2>Cheat Sheet Builder</h2>
+  <p class="small">Your ⭐ items appear here. Click “Download” to get a TXT you can print.</p>
+  <ul id="cheat-list" class="checklist"></ul>
+  <button class="btn alt" id="download-cheat">Download Cheat Sheet</button>
+</section>
+
+<!-- 8) Adaptive Final 72 Hours -->
+<section id="final72" class="panel">
+  <h2>Adaptive Final 72-Hour Plan</h2>
+  <div id="plan72">
+    <p class="small">Complete a few daily check-ins first; this plan adapts to your weakest domain.</p>
+  </div>
+</section>
+
+<!-- 9) Exam Day Checklist (auto shows at ≥90%) -->
+<section id="examday" class="panel" style="display:none">
+  <h2>Exam-Day Readiness Checklist</h2>
+  <ul class="checklist" id="examday-list">
+    <li><label><input type="checkbox" class="ed"> Government ID verified (name matches)</label></li>
+    <li><label><input type="checkbox" class="ed"> Testing appointment confirmed (time zone double-checked)</label></li>
+    <li><label><input type="checkbox" class="ed"> If online: room scan ready, webcam/mic tested, stable internet</label></li>
+    <li><label><input type="checkbox" class="ed"> Sleep schedule adjusted; light exercise in the morning</label></li>
+    <li><label><input type="checkbox" class="ed"> PBQ practice done today (1–2 tasks)</label></li>
+    <li><label><input type="checkbox" class="ed"> Cram sheet skimmed (no new material)</label></li>
+    <li><label><input type="checkbox" class="ed"> Snack/water set; minimize caffeine if testing late</label></li>
+  </ul>
+</section>
+
+</div><!-- /.wrap -->
 
 <script>
-    // Optional: set exam date or leave null
-    const examDate = null; // e.g., new Date(2025, 7, 31) // Aug is monthIndex 7
+/* ======= CONFIG / DATA ======= */
+const examDate = null; // e.g., new Date(2025, 7, 31) // Aug=7
 
-    function updateCountdown() {
-        const el = document.getElementById('countdown');
-        if (!el) return;
-        if (examDate instanceof Date) {
-            const now = new Date();
-            const diffMs = examDate - now;
-            const diffDays = Math.ceil(diffMs / (1000*60*60*24));
-            if (!isNaN(diffDays)) {
-                el.textContent = diffDays >= 0 ? `${diffDays} day(s) until exam` : `Exam date: ${examDate.toDateString()}`;
-            } else {
-                el.textContent = "";
-            }
-        } else {
-            el.textContent = "";
-        }
-    }
+// Domain codes -> labels (Core 2 buckets)
+const DOMAINS = {
+  OS: { name: "Operating Systems", weight: 0.31 },
+  SEC:{ name: "Security",          weight: 0.25 },
+  TS: { name: "Software Troubleshooting", weight: 0.22 },
+  OP: { name: "Operational Procedures",   weight: 0.22 }
+};
 
-    // Persisted progress
-    const savedProgress = JSON.parse(localStorage.getItem('aplusProgress') || '{}');
+// Map sections to domains for progress calc
+const SECTION_IDS = {
+  "sec1":"OP","sec2":"OS","sec7":"OP","sec8":"OS","sec9":"OS","sec10":"OS",
+  "sec11":"OS","sec12":"OS","sec13":"SEC","sec14":"OP","sec15":"OS","sec16":"TS",
+  "sec17_21":"OS","sec23_25":"TS","sec27_28":"SEC","final_prep":"OP"
+};
 
-    // Restore any saved checkboxes
-    window.addEventListener('DOMContentLoaded', () => {
-        for (let id in savedProgress) {
-            if (savedProgress[id] === true) {
-                const cb = document.getElementById(id);
-                if (cb) cb.checked = true;
-            }
-        }
-        // Attach listeners
-        document.querySelectorAll('input[type=checkbox]').forEach(cb => {
-            cb.addEventListener('change', () => {
-                savedProgress[cb.id] = cb.checked;
-                localStorage.setItem('aplusProgress', JSON.stringify(savedProgress));
-                updateProgressBar();
-            });
-        });
-        updateProgressBar();
-        updateCountdown();
+// Facts bank (trim/add freely). Format: {q,a,domain}
+const FACTS = [
+  {q:"RDP default port", a:"TCP 3389", domain:"OS"},
+  {q:"SFC purpose", a:"Scans and repairs protected Windows system files", domain:"OS"},
+  {q:"WPA2 encryption", a:"AES (CCMP)", domain:"SEC"},
+  {q:"ipconfig /all shows", a:"All IP config including MAC, DNS, DHCP, gateways", domain:"OS"},
+  {q:"NTFS vs Share effective perms", a:"Most restrictive wins", domain:"SEC"},
+  {q:"chkdsk /f", a:"Fixes file system errors", domain:"OS"},
+  {q:"gpupdate /force", a:"Force Group Policy refresh", domain:"OS"},
+  {q:"Malware vs Ransomware", a:"Ransomware encrypts files for payment", domain:"SEC"},
+  {q:"Default deny rule", a:"Implicit deny if no rule matches", domain:"SEC"},
+  {q:"TACACS+ vs RADIUS", a:"TACACS+ encrypts entire payload; RADIUS only password", domain:"SEC"},
+  {q:"UEFI Secure Boot", a:"Ensures trusted bootloader only", domain:"OS"},
+  {q:"WinRE tool", a:"Startup Repair, System Restore, Command Prompt", domain:"TS"},
+  {q:"Effective backup rule", a:"3-2-1: 3 copies, 2 media, 1 offsite", domain:"OP"},
+  {q:"Run as Administrator", a:"Elevates token for admin-level actions", domain:"OS"},
+  {q:"BitLocker uses", a:"TPM for disk encryption", domain:"SEC"},
+  {q:"net use", a:"Map network drives via command line", domain:"OS"},
+  {q:"NAT purpose", a:"Translate private IPs to public", domain:"OS"},
+  {q:"DNS record A", a:"Hostname to IPv4 address", domain:"OS"},
+  {q:"Safe Mode", a:"Loads minimal drivers/services", domain:"TS"},
+  {q:"Social engineering", a:"Deception to extract info or access", domain:"SEC"},
+  {q:"Change management", a:"Formal process for changes to reduce risk", domain:"OP"},
+  {q:"Windows Defender Firewall location", a:"Windows Security app / Control Panel", domain:"OS"},
+  {q:"Linux file perms", a:"r=4,w=2,x=1 across user/group/other", domain:"OS"},
+  {q:"macOS Time Machine", a:"Versioned backups to external/Network", domain:"OP"},
+  {q:"Default gateway bad", a:"Local OK, no internet; ping fails outside subnet", domain:"TS"},
+  {q:"Proxy purpose", a:"Mediates client ↔ internet, caching/filtering", domain:"OS"},
+  {q:"VPN", a:"Encrypted tunnel over untrusted networks", domain:"SEC"},
+  {q:"ACL order", a:"Top-down, first match wins", domain:"SEC"},
+  {q:"Event Viewer usage", a:"Review logs for troubleshooting", domain:"TS"},
+  {q:"Power plan: Balanced", a:"Autoscale performance vs energy", domain:"OP"}
+];
+
+// Acronyms (trim/add)
+const ACRONYMS = {
+  ACL:"Access Control List",
+  MFA:"Multi-Factor Authentication",
+  UTM:"Unified Threat Management",
+  TPM:"Trusted Platform Module",
+  MBR:"Master Boot Record",
+  GPT:"GUID Partition Table",
+  APIPA:"Automatic Private IP Addressing",
+  PBQ:"Performance-Based Question",
+  SFC:"System File Checker",
+  UEFI:"Unified Extensible Firmware Interface",
+  EFS:"Encrypting File System",
+  MFAE:"(Trap) Not a thing — watch for distractors"
+};
+
+/* ======= STATE ======= */
+const savedProgress = JSON.parse(localStorage.getItem('aplusProgress') || '{}');
+const mastered = JSON.parse(localStorage.getItem('aplusMastered') || '[]');   // array of fact indexes
+const starred   = JSON.parse(localStorage.getItem('aplusStarred')   || '[]'); // array of fact indexes
+const quizStats = JSON.parse(localStorage.getItem('aplusQuizStats') || '{"correct":0,"total":0,"byDomain":{}}');
+const acrStats  = JSON.parse(localStorage.getItem('aplusAcrStats')  || '{"correct":0,"total":0,"streak":0,"best":0}');
+let currentAcr  = null;
+
+/* ======= UI INIT ======= */
+function updateCountdown(){
+  const el=document.getElementById('countdown');
+  if(!el) return;
+  if(examDate instanceof Date){
+    const now=new Date(); const diff=Math.ceil((examDate-now)/(1000*60*60*24));
+    el.textContent = isNaN(diff) ? "" : (diff>=0? `${diff} day(s) until exam` : `Exam date: ${examDate.toDateString()}`);
+  } else el.textContent="";
+}
+
+/* Progress bar (sections) */
+function updateProgressBar(){
+  // Restore saved section checkboxes
+  for(let id in savedProgress){ if(savedProgress[id]===true){ const cb=document.getElementById(id); if(cb) cb.checked=true; } }
+  // Hook changes
+  document.querySelectorAll('input[type=checkbox][id$="-done"]').forEach(cb=>{
+    cb.addEventListener('change',()=>{
+      savedProgress[cb.id]=cb.checked;
+      localStorage.setItem('aplusProgress',JSON.stringify(savedProgress));
+      drawProgress();
     });
+  });
+  drawProgress();
+}
 
-    function updateProgressBar() {
-        const checkboxes = document.querySelectorAll('input[type=checkbox]');
-        const totalTasks = checkboxes.length;
-        let completed = 0;
-        checkboxes.forEach(cb => { if (cb.checked) completed++; });
-        const percent = totalTasks > 0 ? Math.floor((completed / totalTasks) * 100) : 0;
+function drawProgress(){
+  const cbs=[...document.querySelectorAll('input[type=checkbox][id$="-done"]')];
+  const total=cbs.length;
+  const completed=cbs.filter(c=>c.checked).length;
+  const percent= total? Math.floor(100*completed/total):0;
+  const bar=document.getElementById('progress-bar');
+  const txt=document.getElementById('progress-text');
+  if(bar) bar.style.width=percent+'%';
+  if(txt) txt.textContent = `${completed}/${total} sections done (${percent}%)`;
+  document.getElementById('congrats').style.display = (total && completed===total)?'block':'none';
+  // Exam day panel
+  document.getElementById('examday').style.display = (percent>=90)?'block':'none';
+  // Recompute domain cards
+  renderDomainCards();
+  // Recompute Final 72h plan
+  renderFinal72();
+}
 
-        const bar = document.getElementById('progress-bar');
-        const text = document.getElementById('progress-text');
-        if (bar && text) {
-            bar.style.width = percent + '%';
-            text.textContent = totalTasks > 0
-                ? `${completed}/${totalTasks} sections done (${percent}%)`
-                : `0% complete`;
-        }
-        const congrats = document.getElementById('congrats');
-        if (congrats) congrats.style.display = (totalTasks > 0 && completed === totalTasks) ? 'block' : 'none';
+/* Domain cards combine: section completion + quiz accuracy */
+function renderDomainCards(){
+  const container=document.getElementById('domain-cards');
+  if(!container) return;
+  container.innerHTML='';
+  // section completion by domain
+  const domains=Object.keys(DOMAINS);
+  const sectTotals={}; const sectDone={};
+  domains.forEach(d=>{sectTotals[d]=0; sectDone[d]=0;});
+  Object.keys(SECTION_IDS).forEach(sec=>{
+    const dom=SECTION_IDS[sec];
+    sectTotals[dom]++; 
+    const cb=document.getElementById(sec+'-done');
+    if(cb && cb.checked) sectDone[dom]++;
+  });
+  // quiz accuracy by domain
+  const byD=quizStats.byDomain||{};
+  domains.forEach(d=>{
+    const acc = byD[d]?.total ? Math.round(100*byD[d].correct/byD[d].total) : null;
+    const comp = sectTotals[d]? Math.round(100*sectDone[d]/sectTotals[d]) : 0;
+    const blended = acc==null ? comp : Math.round((comp+acc)/2);
+    const card=document.createElement('div'); card.className='domain-card';
+    card.innerHTML = `
+      <div><strong>${DOMAINS[d].name}</strong></div>
+      <div>Sections: ${sectDone[d]}/${sectTotals[d]} (${comp}%)</div>
+      <div>Quiz Accuracy: ${acc==null?'—':acc+'%'} </div>
+      <div class="bar-bg"><div class="bar" style="width:${blended}%"></div></div>
+      <div class="small">Blended Mastery: ${blended}%</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+/* Render facts list */
+function renderFacts(){
+  const ul=document.getElementById('facts-list'); ul.innerHTML='';
+  FACTS.forEach((f,idx)=>{
+    const li=document.createElement('li');
+    const isMastered=mastered.includes(idx);
+    const isStar=starred.includes(idx);
+    li.innerHTML = `
+      <button class="btn small" data-act="master" data-id="${idx}">${isMastered?'Unmaster':'Mastered'}</button>
+      <button class="btn ghost small" data-act="star" data-id="${idx}">${isStar?'⭐ Remove':'⭐ Save'}</button>
+      <span><strong>${f.q}</strong> — ${f.a}
+        <span class="tag">${DOMAINS[f.domain].name}</span>
+      </span>
+    `;
+    if(isMastered) li.style.opacity=.6;
+    ul.appendChild(li);
+  });
+  ul.addEventListener('click',(e)=>{
+    const b=e.target.closest('button'); if(!b) return;
+    const id=+b.dataset.id;
+    if(b.dataset.act==='master'){
+      const i=mastered.indexOf(id); if(i>=0) mastered.splice(i,1); else mastered.push(id);
+      localStorage.setItem('aplusMastered',JSON.stringify(mastered)); renderFacts();
+    } else {
+      const i=starred.indexOf(id); if(i>=0) starred.splice(i,1); else starred.push(id);
+      localStorage.setItem('aplusStarred',JSON.stringify(starred)); renderFacts(); renderCheat();
     }
-</script>
+  });
+}
 
+/* PBQ: Firewall drag order */
+const FW_RULES = [
+  "Block RDP from 10.0.0.0/8",
+  "Allow HTTPS outbound",
+  "Default deny all"
+];
+function initFirewallPBQ(){
+  const pool=document.getElementById('firewall-pool');
+  const target=document.getElementById('firewall-target');
+  // make shuffled pills
+  const shuffled=[...FW_RULES].sort(()=>Math.random()-0.5);
+  shuffled.forEach(txt=>{
+    const p=document.createElement('div'); p.className='pill'; p.textContent=txt; p.draggable=true;
+    p.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',txt); p.classList.add('dragging');});
+    p.addEventListener('dragend',()=>p.classList.remove('dragging'));
+    pool.appendChild(p);
+  });
+  ;[pool,target].forEach(z=>{
+    z.addEventListener('dragover',e=>{e.preventDefault();});
+    z.addEventListener('drop',e=>{
+      e.preventDefault();
+      const txt=e.dataTransfer.getData('text/plain');
+      const el=[...document.querySelectorAll('.pill')].find(x=>x.textContent===txt);
+      if(el) z.appendChild(el);
+    });
+  });
+  document.getElementById('fw-check').addEventListener('click',()=>{
+    const order=[...target.querySelectorAll('.pill')].map(x=>x.textContent);
+    const ok = order.length===3 && order.every((v,i)=>v===FW_RULES[i]);
+    document.getElementById('fw-result').innerHTML = ok
+      ? '<span class="ok">✔ Correct order. First-match, top-down.</span>'
+      : '<span class="bad">✖ Not quite. Remember: specific blocks → allows → default deny.</span>';
+  });
+}
+
+/* PBQ: CLI validator */
+const CLI_OK = ["sfc /scannow","ipconfig /all","gpupdate /force","chkdsk /f"];
+function initCLI(){
+  const input=document.getElementById('cli-input'); const out=document.getElementById('cli-result');
+  input.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'){
+      const val=input.value.trim().toLowerCase();
+      const good = CLI_OK.includes(val);
+      out.innerHTML = good ? '<span class="ok">✔ Valid command for this exam.</span>' :
+        '<span class="bad">✖ Not recognized here. Try sfc /scannow, ipconfig /all, gpupdate /force, chkdsk /f.</span>';
+      input.value='';
+    }
+  });
+}
+
+/* Daily 5-Question Check-In */
+function sampleQuestions(n=5){
+  // build MC from FACTS (skip mastered to keep it fresh)
+  const pool=FACTS.map((f,i)=>({f,i})).filter(x=>!mastered.includes(x.i));
+  const pick=[...pool].sort(()=>Math.random()-0.5).slice(0,Math.min(n,pool.length));
+  return pick.map(x=>{
+    const correct=x.f.a;
+    const distractors=[...FACTS].filter(f=>f.domain===x.f.domain && f.a!==correct).map(f=>f.a);
+    const opts=[correct, ...distractors.sort(()=>Math.random()-0.5).slice(0,3)].sort(()=>Math.random()-0.5);
+    return {q:x.f.q, a:correct, options:opts, domain:x.f.domain};
+  });
+}
+
+function renderDailyQuiz(){
+  const holder=document.getElementById('daily-quiz'); holder.innerHTML='';
+  const qs=sampleQuestions(5);
+  if(qs.length<1){ holder.innerHTML='<p>All your facts are marked Mastered. Unmaster a few to practice again.</p>'; return; }
+  qs.forEach((q,idx)=>{
+    const div=document.createElement('div'); div.className='panel';
+    div.innerHTML = `<strong>${idx+1}. ${q.q}</strong>
+      <ul style="list-style:none;padding-left:0">
+        ${q.options.map(o=>`<li><label><input type="radio" name="dq${idx}" value="${o}"> ${o}</label></li>`).join('')}
+      </ul>
+      <button class="btn small" data-check="${idx}">Check</button>
+      <span class="small" id="dqres${idx}"></span>`;
+    holder.appendChild(div);
+  });
+  holder.addEventListener('click',(e)=>{
+    const b=e.target.closest('button[data-check]'); if(!b) return;
+    const i=+b.dataset.check; const sel=document.querySelector(`input[name="dq${i}"]:checked`);
+    const q=qs[i]; const res=document.getElementById(`dqres${i}`);
+    if(!sel){ res.textContent='Select an answer.'; return; }
+    const ok = sel.value===q.a;
+    res.innerHTML = ok? '<span class="ok">✔ Correct</span>' : `<span class="bad">✖ ${q.a}</span>`;
+    // stats
+    quizStats.total++; if(ok) quizStats.correct++;
+    quizStats.byDomain = quizStats.byDomain || {};
+    quizStats.byDomain[q.domain]=quizStats.byDomain[q.domain]||{correct:0,total:0};
+    quizStats.byDomain[q.domain].total++; if(ok) quizStats.byDomain[q.domain].correct++;
+    localStorage.setItem('aplusQuizStats',JSON.stringify(quizStats));
+    drawQuizStats(); renderDomainCards(); renderFinal72();
+  },{once:false});
+}
+
+function drawQuizStats(){
+  const el=document.getElementById('quiz-stats');
+  const overall = quizStats.total? Math.round(100*quizStats.correct/quizStats.total):0;
+  const d=quizStats.byDomain||{};
+  const parts=Object.keys(DOMAINS).map(k=>{
+    const s=d[k]; const pct = s?.total? Math.round(100*s.correct/s.total):0;
+    return `${DOMAINS[k].name}: ${s?.total||0} q, ${pct}%`
+  }).join(' • ');
+  el.textContent = `Overall: ${quizStats.correct}/${quizStats.total} (${overall}%) • ${parts||'No domain data yet.'}`;
+}
+
+/* Acronym Drill */
+function nextAcronym(){
+  const keys=Object.keys(ACRONYMS);
+  currentAcr = keys[Math.floor(Math.random()*keys.length)];
+  document.getElementById('acr-current').textContent=currentAcr;
+  document.getElementById('acr-answer').value=''; document.getElementById('acr-feedback').textContent='';
+}
+function checkAcr(ans){
+  const correct=ACRONYMS[currentAcr].toLowerCase().trim();
+  const ok = ans.toLowerCase().trim()===correct;
+  const fb=document.getElementById('acr-feedback');
+  if(ok){ fb.innerHTML='<span class="ok">✔ Correct</span>'; acrStats.correct++; acrStats.streak++; acrStats.best=Math.max(acrStats.best,acrStats.streak);}
+  else { fb.innerHTML=`<span class="bad">✖ ${ACRONYMS[currentAcr]}</span>`; acrStats.streak=0; }
+  acrStats.total++; localStorage.setItem('aplusAcrStats',JSON.stringify(acrStats));
+  drawAcrStats();
+}
+function drawAcrStats(){
+  const s=acrStats;
+  const pct = s.total? Math.round(100*s.correct/s.total):0;
+  document.getElementById('acr-stats').textContent = `Correct: ${s.correct}/${s.total} (${pct}%) • Streak: ${s.streak} • Best: ${s.best}`;
+}
+
+/* Cheat Sheet */
+function renderCheat(){
+  const ul=document.getElementById('cheat-list'); ul.innerHTML='';
+  if(starred.length===0){ ul.innerHTML='<li class="small">Nothing starred yet. Add ⭐ from Top 50.</li>'; return; }
+  starred.forEach(i=>{
+    const f=FACTS[i];
+    const li=document.createElement('li');
+    li.textContent = `${f.q} — ${f.a} [${DOMAINS[f.domain].name}]`;
+    ul.appendChild(li);
+  });
+}
+function downloadCheat(){
+  const lines = [
+    "CompTIA A+ 220-1102 — Personal Cheat Sheet",
+    new Date().toLocaleString(),
+    "",
+    ...starred.map(i=>`• ${FACTS[i].q} — ${FACTS[i].a} [${DOMAINS[FACTS[i].domain].name}]`)
+  ];
+  const blob = new Blob([lines.join('\n')],{type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='Aplus-Core2-CheatSheet.txt';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+/* Final 72-Hour Plan (adaptive) */
+function weakestDomain(){
+  const by=quizStats.byDomain||{};
+  // pick domain with lowest pct among those attempted; if none, fall back to lowest section completion
+  let lowDom=null, lowPct=101;
+  Object.keys(DOMAINS).forEach(d=>{
+    const s=by[d];
+    if(s && s.total>0){
+      const pct=Math.round(100*s.correct/s.total);
+      if(pct<lowPct){lowPct=pct;lowDom=d;}
+    }
+  });
+  if(lowDom) return lowDom;
+  // fallback by sections
+  const totals={}, done={}; Object.keys(DOMAINS).forEach(d=>{totals[d]=0;done[d]=0;});
+  Object.keys(SECTION_IDS).forEach(sec=>{
+    const d=SECTION_IDS[sec]; totals[d]++; const cb=document.getElementById(sec+'-done'); if(cb?.checked) done[d]++;
+  });
+  let low=null, lowc=999;
+  Object.keys(DOMAINS).forEach(d=>{
+    const pct = totals[d]? Math.round(100*done[d]/totals[d]) : 0;
+    if(pct<lowc){lowc=pct;low=d;}
+  });
+  return low || "OS";
+}
+function renderFinal72(){
+  const box=document.getElementById('plan72');
+  const wd=weakestDomain();
+  const name=DOMAINS[wd].name;
+  box.innerHTML = `
+    <p><strong>Your current weakest domain:</strong> ${name}</p>
+    <ul>
+      <li><strong>Day -3:</strong> Rewatch/skim chapters mapped to <em>${name}</em>. Do 2× Daily Check-Ins limited to this domain (use Top 50 filters by starring). PBQ: practice firewall order + 5 CLI commands.</li>
+      <li><strong>Day -2:</strong> Full timed 90-question practice. Post-test: star new weak facts. Do Acronym Drill (10 correct in a row target).</li>
+      <li><strong>Day -1:</strong> Light review: only starred items + 1 PBQ + exam logistics. No cramming after dinner. Sleep.</li>
+    </ul>
+    <p class="small">Tip: Remove “Mastered” items from rotation to keep practice targeted.</p>
+  `;
+}
+
+/* Exam-day checklist persistence */
+function initExamDay(){
+  const eds=[...document.querySelectorAll('.ed')];
+  const saved=JSON.parse(localStorage.getItem('aplusExamDay')||'{}');
+  eds.forEach((cb,i)=>{
+    cb.checked = !!saved[i];
+    cb.addEventListener('change',()=>{
+      saved[i]=cb.checked; localStorage.setItem('aplusExamDay',JSON.stringify(saved));
+    });
+  });
+}
+
+/* Hooks */
+function boot(){
+  updateCountdown();
+  // Restore section checkboxes
+  for(let id in savedProgress){ if(savedProgress[id]===true){ const cb=document.getElementById(id); if(cb) cb.checked=true; } }
+  updateProgressBar();
+
+  // Facts/cheat
+  renderFacts(); renderCheat();
+
+  // PBQ
+  initFirewallPBQ(); initCLI();
+
+  // Daily quiz
+  renderDailyQuiz(); drawQuizStats();
+  document.getElementById('new-quiz').onclick=()=>{renderDailyQuiz();};
+  document.getElementById('reset-quiz-stats').onclick=()=>{localStorage.removeItem('aplusQuizStats'); location.reload();};
+
+  // Acronyms
+  drawAcrStats(); nextAcronym();
+  document.getElementById('acr-answer').addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'){ checkAcr(e.target.value); }
+  });
+  document.getElementById('acr-next').onclick=()=>nextAcronym();
+
+  // Cheat
+  document.getElementById('download-cheat').onclick=downloadCheat;
+
+  // Exam day
+  initExamDay();
+
+  // Clicks in chapter checkboxes update everything
+  document.querySelectorAll('input[type=checkbox][id$="-done"]').forEach(cb=>{
+    cb.addEventListener('change',()=>{ renderDomainCards(); renderFinal72(); });
+  });
+}
+
+document.addEventListener('DOMContentLoaded',boot);
+</script>
 </body>
 </html>
