@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CompTIA A+ 220-1102 • 3-Week Tracker</title>
+<title>A+ 220-1102 • Andrew Ramdayal Course Tracker</title>
 <style>
   :root{
     --bg:#0f1115;--card:#171a21;--muted:#9aa4b2;--text:#e6e9ef;--brand:#6bc4ff;--accent:#64d2ff;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--chip:#243244;
   }
+  *{box-sizing:border-box}
   body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:linear-gradient(180deg,#0b1220,#0a0d13 30%,#0b1017);color:var(--text)}
   header{position:sticky;top:0;z-index:5;background:rgba(11,16,23,.8);backdrop-filter:blur(10px);border-bottom:1px solid #1f2733}
-  .wrap{max-width:900px;margin:0 auto;padding:14px}
+  .wrap{max-width:980px;margin:0 auto;padding:14px}
   h1{font-size:20px;margin:6px 0 2px}
   .sub{color:var(--muted);font-size:13px}
   .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -26,24 +27,18 @@
   .pill{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border:1px solid #2b3d55;color:#bcd6ff;padding:6px 10px;border-radius:999px;font-size:12px}
   .progress{height:10px;background:#0e1622;border:1px solid #1d2a3b;border-radius:999px;overflow:hidden}
   .bar{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--accent));transition:width .3s}
-  .kvl{display:flex;gap:10px;flex-wrap:wrap}
   details summary{cursor:pointer;color:#bcd6ff}
-  .day{display:grid;gap:10px;background:#121824;border:1px solid #1d2938;border-radius:12px;padding:12px}
-  .day h4{margin:0}
-  .checklist{display:grid;gap:8px}
-  .item{display:flex;align-items:flex-start;gap:10px}
+  .two{display:grid;gap:12px}
+  @media(min-width:760px){.two{grid-template-columns:1fr 1fr}}
+  .section{display:grid;gap:10px;background:#121824;border:1px solid #1d2938;border-radius:12px;padding:12px}
+  .item{display:flex;gap:10px;align-items:flex-start}
   .item input{transform:translateY(2px)}
   textarea{width:100%;min-height:70px;background:#0d131c;border:1px solid #1b2736;color:var(--text);border-radius:10px;padding:10px}
-  .two{display:grid;gap:12px}
-  @media(min-width:720px){.two{grid-template-columns:1fr 1fr}}
-  .inline{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .chip{background:#0f1a26;border:1px solid #1d2c3f;border-radius:10px;padding:8px 10px}
   .list{display:grid;gap:8px}
   .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0e1520;border:1px solid #1b2a3f;border-radius:8px;padding:2px 6px}
-  .copy{cursor:pointer;border:1px dashed #35527a;border-radius:8px;padding:2px 6px}
+  .copy{cursor:pointer;border:1px dashed #35527a;border-radius:8px;padding:2px 6px;margin-left:6px}
   .footer{opacity:.7;font-size:12px;padding:20px 0}
-  .danger{background:#2b1212;border-color:#6a1e1e}
-  .sr{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+  .chip{background:#0f1a26;border:1px solid #1d2c3f;border-radius:10px;padding:8px 10px}
 </style>
 </head>
 <body>
@@ -51,23 +46,23 @@
   <div class="wrap">
     <div class="row" style="justify-content:space-between">
       <div>
-        <h1>CompTIA A+ 220-1102 • 3-Week Tracker</h1>
+        <h1>A+ 220-1102 • Andrew Ramdayal Course Tracker</h1>
         <div class="sub">Plan: <span class="pill">Andrew Ramdayal (Udemy)</span> <span class="pill">Jason Dion Practice Exams</span></div>
       </div>
       <div class="row">
-        <button class="btn" id="darkToggle" aria-label="Toggle dark mode">🌙</button>
         <button class="btn brand" id="exportBtn">Export</button>
-        <label class="btn" for="importFile" title="Import progress JSON">Import</label>
-        <input id="importFile" type="file" accept="application/json" class="sr">
-        <button class="btn" id="resetBtn" title="Clear all saved progress">Reset</button>
+        <label class="btn" for="importFile">Import</label>
+        <input id="importFile" type="file" accept="application/json" style="display:none">
+        <button class="btn" id="resetBtn">Reset</button>
       </div>
     </div>
+
     <div class="grid" style="margin-top:12px">
       <div class="card">
         <div class="row" style="justify-content:space-between;align-items:center">
           <div class="row">
-            <div class="pill">Overall Progress: <b id="pct">0%</b></div>
-            <div class="pill">Completed: <b id="doneCount">0</b>/<b id="totalCount">0</b></div>
+            <div class="pill">Domain-Weighted Progress: <b id="pct">0%</b></div>
+            <div class="pill">Sections Done: <b id="doneCount">0</b>/<b id="totalCount">0</b></div>
             <div class="pill">Streak: <b id="streak">0</b> days</div>
           </div>
           <div class="row">
@@ -86,15 +81,16 @@
 
 <main class="wrap grid" style="margin-top:14px">
 
-  <!-- Quick Utilities -->
+  <!-- Flashcards / Glossary -->
   <section class="two">
     <div class="card">
-      <h3 style="margin:0 0 8px">Flashcards • High-Yield 1102</h3>
-      <div class="inline">
+      <h3 style="margin:0 0 8px">Flashcards • Section-Aware</h3>
+      <div class="row">
         <button class="btn" id="fcPrev">◀</button>
         <button class="btn brand" id="fcFlip">Flip</button>
-        <button class="btn" id="fcKnown">Known ✅</button>
-        <button class="btn warn" id="fcUnknown">Review 🔁</button>
+        <button class="btn ok" id="fcKnown">Known</button>
+        <button class="btn warn" id="fcUnknown">Review</button>
+        <select id="fcSection" class="btn"></select>
         <button class="btn" id="fcReset">Reset Deck</button>
       </div>
       <div id="fcCard" class="card" style="margin-top:10px;background:#0f1622;text-align:center;min-height:110px;display:flex;align-items:center;justify-content:center;border-style:dashed">
@@ -113,51 +109,40 @@
       <details style="margin-top:10px">
         <summary>Common Windows / Linux Commands</summary>
         <div class="list" style="margin-top:10px">
-          <div>Windows: <span class="kbd">sfc /scannow</span> <span class="copy" data-copy="sfc /scannow">Copy</span> — verify system files</div>
-          <div>Windows: <span class="kbd">dism /online /cleanup-image /restorehealth</span> <span class="copy" data-copy="dism /online /cleanup-image /restorehealth">Copy</span> — service component store</div>
-          <div>Windows: <span class="kbd">ipconfig /all</span> <span class="copy" data-copy="ipconfig /all">Copy</span> — IP details</div>
-          <div>Linux: <span class="kbd">chmod 755 file</span> <span class="copy" data-copy="chmod 755 file">Copy</span> — permissions</div>
-          <div>Linux: <span class="kbd">grep -R "text" /path</span> <span class="copy" data-copy='grep -R "text" /path'>Copy</span> — recursive search</div>
+          <div>Windows: <span class="kbd">sfc /scannow</span><span class="copy" data-copy="sfc /scannow">Copy</span> — verify system files</div>
+          <div>Windows: <span class="kbd">dism /online /cleanup-image /restorehealth</span><span class="copy" data-copy="dism /online /cleanup-image /restorehealth">Copy</span> — repair component store</div>
+          <div>Windows: <span class="kbd">ipconfig /all</span><span class="copy" data-copy="ipconfig /all">Copy</span> — IP details</div>
+          <div>Windows: <span class="kbd">gpupdate /force</span><span class="copy" data-copy="gpupdate /force">Copy</span> — refresh policies</div>
+          <div>Linux: <span class="kbd">chmod 755 file</span><span class="copy" data-copy="chmod 755 file">Copy</span> — permissions</div>
+          <div>Linux: <span class="kbd">grep -R "text" /path</span><span class="copy" data-copy='grep -R "text" /path'>Copy</span> — recursive search</div>
         </div>
       </details>
     </div>
   </section>
 
-  <!-- Study Plan -->
+  <!-- Course Map -->
   <section class="card">
-    <h3 style="margin:0 0 6px">3-Week Plan (15 study days)</h3>
-    <div class="sub">Focused for Andrew Ramdayal (Udemy) + Jason Dion exams. Check items as you finish. Add notes for anything that didn’t stick.</div>
-    <div id="plan" class="grid" style="margin-top:12px"></div>
+    <h3 style="margin:0 0 6px">Andrew’s Course Sections (Domain-weighted)</h3>
+    <div class="sub">Follow the sequence. Each checklist item maps to Andrew’s topics and PBQ-style actions.</div>
+    <div id="sections" class="grid" style="margin-top:12px"></div>
   </section>
 
   <!-- Practice Exams -->
   <section class="card">
-    <h3 style="margin:0 0 6px">Practice Exam Tracker (Jason Dion)</h3>
-    <div class="sub">Aim for 1/day in Week 2. Review every explanation, especially wrong answers.</div>
+    <h3 style="margin:0 0 6px">Jason Dion Practice Exam Tracker</h3>
+    <div class="sub">Target ≥ 80% before moving on. Tag mistakes with the related section.</div>
     <div id="exams" class="grid" style="margin-top:10px"></div>
   </section>
 
-  <!-- PBQ + Checklist -->
+  <!-- PBQ + Final Checks -->
   <section class="two">
     <div class="card">
-      <h3 style="margin:0 0 6px">PBQ Readiness</h3>
-      <div class="list">
-        <label class="item"><input type="checkbox" data-k="pbq.winAdmin"> I can add a Windows user, set password policy, and adjust UAC.</label>
-        <label class="item"><input type="checkbox" data-k="pbq.startup"> I can troubleshoot a no-boot: Safe Mode, Startup Repair, bootrec.</label>
-        <label class="item"><input type="checkbox" data-k="pbq.security"> I can choose correct Wi-Fi security (WPA2 vs WPA3), firewall rules.</label>
-        <label class="item"><input type="checkbox" data-k="pbq.permissions"> I can compare NTFS vs Share permissions & resolve access issues.</label>
-        <label class="item"><input type="checkbox" data-k="pbq.malware"> I know malware removal order & post-incident steps.</label>
-      </div>
+      <h3 style="margin:0 0 6px">PBQ Readiness (Hands-on goals)</h3>
+      <div id="pbq" class="list"></div>
     </div>
     <div class="card">
       <h3 style="margin:0 0 6px">Final 48-Hour Checklist</h3>
-      <div class="list">
-        <label class="item"><input type="checkbox" data-k="final.commands"> Re-drill Windows/Linux/macOS commands.</label>
-        <label class="item"><input type="checkbox" data-k="final.ops"> Review Operational Procedures (docs, safety, disposal, chain of custody).</label>
-        <label class="item"><input type="checkbox" data-k="final.security"> Recheck security protocols & passwords/MFA concepts.</label>
-        <label class="item"><input type="checkbox" data-k="final.notes"> Skim my notes & weak-topic flashcards.</label>
-        <label class="item"><input type="checkbox" data-k="final.sleep"> Sleep 7–8 hours, hydrate, arrive early.</label>
-      </div>
+      <div id="final48" class="list"></div>
     </div>
   </section>
 
@@ -167,371 +152,475 @@
 </main>
 
 <script>
-/* ---------------- State ---------------- */
-const KEY='a1102_tracker_v1';
-const state = load() || {
-  examDate:'',
-  dark:true,
-  checks:{}, notes:{}, exams:{},
-  fc:{known:[],unknown:[],i:0,showBack:false},
-  meta:{streak:0,lastDone:''}
+/* ===================== CONFIG ===================== */
+/* Domain weights per CompTIA Core 2 blueprint */
+const DOMAIN_WEIGHTS = {
+  "1. Operating Systems": 31,
+  "2. Security": 25,
+  "3. Software Troubleshooting": 22,
+  "4. Operational Procedures": 22
 };
 
-/* ---------------- Plan Template ---------------- */
-const days = [
-  {title:'Day 1 — Windows Foundations',
-   items:[
-    'Watch Andrew: Windows editions (Home/Pro/Enterprise), features, min HW.',
-    'Hands-on: Settings vs Control Panel; Device Manager tour.',
-    'Make flashcards for features you confuse.'
-   ]},
-  {title:'Day 2 — User/Policy/Admin Tools',
-   items:[
-    'Watch Andrew: Users/Groups, Local Security Policy, UAC, Services.',
-    'Lab: create standard vs admin user, test UAC prompts.',
-    'Quiz: difference NTFS vs Share permissions.'
-   ]},
-  {title:'Day 3 — Storage & Recovery',
-   items:[
-    'Watch Andrew: file systems, BitLocker, Recovery options.',
-    'Run: sfc /scannow then DISM (note what each does).',
-    'PBQ sim: pick right recovery path for a boot failure.'
-   ]},
-  {title:'Day 4 — CLI Essentials',
-   items:[
-    'Watch Andrew: Command-line (Windows/Linux/macOS).',
-    'Drill: ipconfig, netstat, nslookup, diskpart, chmod, grep.',
-    'Flashcards: commands & switches you miss.'
-   ]},
-  {title:'Day 5 — Software Troubleshooting I',
-   items:[
-    'Watch Andrew: App crashes, services failing, updates.',
-    'Scenarios: browser hijack, startup loop, corrupt profile.',
-    'Document: decision tree for each symptom.'
-   ]},
-  {title:'Day 6 — Software Troubleshooting II',
-   items:[
-    'Watch Andrew: BSODs, logs (Event Viewer), msconfig, regedit.',
-    'Lab: Safe Mode; Startup impact; view logs by source.',
-    'Write: 5 signs of malware vs failing hardware.'
-   ]},
-  {title:'Day 7 — Security Basics',
-   items:[
-    'Watch Andrew: Threats (phishing, trojans, ransomware).',
-    'Policies: least privilege, password, locking, PII handling.',
-    'Practice: choose best mitigation for 5 scenarios.'
-   ]},
-  {title:'Day 8 — Network Security',
-   items:[
-    'Watch Andrew: WEP/WPA2/WPA3, authentication, certificates.',
-    'Lab: configure SSID with WPA3/enterprise (theory).',
-    'Flashcards: protocols & best practices.'
-   ]},
-  {title:'Day 9 — Operational Procedures I',
-   items:[
-    'Watch Andrew: safety (ESD), docs, ticketing, change mgmt.',
-    'Know: disposal (wipe vs shred), MSDS/SDS basics.',
-    'Quiz: pick correct policy response per scenario.'
-   ]},
-  {title:'Day10 — Operational Procedures II',
-   items:[
-    'Watch Andrew: professionalism, escalation, SLAs.',
-    'Write: incident report template; chain of custody steps.',
-    'Review: ethics & licensing basics.'
-   ]},
-  {title:'Day11 — Full Practice Exam #1',
-   items:[
-    'Jason Dion Exam A (timed).',
-    'Deep review: study every explanation (even correct guesses).',
-    'Flashcard EVERY unknown term.'
-   ]},
-  {title:'Day12 — Targeted Repair',
-   items:[
-    'Rewatch Andrew on weak domains (top 2 gaps).',
-    'Mini-drill: 25 Qs on those topics.',
-    'Lab: do 1 PBQ-like walkthrough.'
-   ]},
-  {title:'Day13 — Full Practice Exam #2',
-   items:[
-    'Jason Dion Exam B (timed).',
-    'Deep review + flashcards from misses.',
-    'Skim official objectives checklist for gaps.'
-   ]},
-  {title:'Day14 — Full Practice Exam #3',
-   items:[
-    'Jason Dion Exam C (timed).',
-    'Review; aim for > 80% before moving on.',
-    'Finalize PBQ readiness checklist.'
-   ]},
-  {title:'Day15 — Final Polish',
-   items:[
-    'Light review: commands, security, ops procedures.',
-    'Re-test: 30-50 mixed questions.',
-    'Rest routine: sleep plan, logistics for exam.'
-   ]},
+/* Andrew Ramdayal – Section map (edit names if you wish) */
+const COURSE_MAP = [
+  {
+    domain:"1. Operating Systems",
+    code:"1.1",
+    title:"Windows Editions & Features",
+    items:[
+      "Identify Win10/11 Home/Pro/Enterprise features and min HW.",
+      "Hands-on: Settings vs Control Panel; Device Manager; Power Options.",
+      "Know update channels & activation basics."
+    ],
+    flashcards:[
+      ["Win Editions","Home / Pro / Enterprise – feature deltas (BitLocker, Domain Join, Hyper-V)."],
+      ["Requirements","Win11: TPM 2.0, UEFI/Secure Boot, CPU/Storage/RAM minimums."]
+    ]
+  },
+  {
+    domain:"1. Operating Systems",
+    code:"1.2",
+    title:"Command-Line & Admin Tools",
+    items:[
+      "Drill: help, dir, cd, md, rd, del, tree, winver, cls.",
+      "Copy tools: copy, xcopy, robocopy.",
+      "Net tools: ping (common flags), ipconfig /all,/renew,/release, netstat, tracert, nslookup, hostname, pathping.",
+      "Repair/admin: sfc /scannow, dism /restorehealth, gpupdate, gpresult."
+    ],
+    flashcards:[
+      ["SFC vs DISM","SFC repairs protected files; DISM repairs component store."],
+      ["ipconfig trio","/all = detail; /release releases lease; /renew requests new lease."]
+    ]
+  },
+  {
+    domain:"1. Operating Systems",
+    code:"1.3",
+    title:"Users, Groups, UAC & Policies",
+    items:[
+      "Create local users; compare Standard vs Admin vs Power User.",
+      "Understand UAC prompts & elevation behavior.",
+      "Local Security Policy & services basics."
+    ],
+    flashcards:[
+      ["Least Privilege","Grant only the rights needed to do the job."],
+      ["UAC","Prevents unauthorized changes; prompts for elevation."]
+    ]
+  },
+  {
+    domain:"1. Operating Systems",
+    code:"1.4",
+    title:"File Systems, Encryption & Recovery",
+    items:[
+      "NTFS vs Share permissions (effective = most restrictive).",
+      "BitLocker, BitLocker To Go vs EFS – when to use which.",
+      "Recovery: Safe Mode, Startup Repair, System Restore, Reset/WinRE."
+    ],
+    flashcards:[
+      ["Permissions precedence","Deny > Allow; explicit > inherited."],
+      ["BitLocker vs EFS","Disk vs file/folder encryption (NTFS only)."]
+    ]
+  },
+  {
+    domain:"1. Operating Systems",
+    code:"1.5",
+    title:"Workgroup vs Domain & Networking Basics",
+    items:[
+      "Workgroup shares, mapped drives; domain join concept.",
+      "Firewall profiles & per-app rules; RDP basics.",
+      "Core 1 refresher: private IP, ports you still see in 1102 questions."
+    ],
+    flashcards:[
+      ["Workgroup","Peer-to-peer, local accounts."],
+      ["Domain","Central auth via AD; GPOs apply."]
+    ]
+  },
+  {
+    domain:"1. Operating Systems",
+    code:"1.6",
+    title:"macOS & Linux Essentials",
+    items:[
+      "macOS basics; Time Machine; Disk Utility; Spotlight; Gatekeeper.",
+      "Linux basics; ownership/permissions; package managers (apt, yum/dnf).",
+      "Common cross-platform commands and paths."
+    ],
+    flashcards:[
+      ["chmod 755","rwx r-x r-x; 4/2/1 weighting."],
+      ["Package mgmt","apt/yum; repo, update, upgrade, install."]
+    ]
+  },
+
+  /* ===== Security ===== */
+  {
+    domain:"2. Security",
+    code:"2.1",
+    title:"Threats & Attacks",
+    items:[
+      "Malware: virus, worm, trojan, ransomware, rootkit, keylogger.",
+      "Social engineering: phishing, spear, vishing, smishing, pretexting.",
+      "Network threats: DoS/DDoS, MITM, spoofing, brute force."
+    ],
+    flashcards:[
+      ["Phishing vs Spear","Bulk vs targeted with context."],
+      ["MITM","Attacker sits in the flow to intercept/alter data."]
+    ]
+  },
+  {
+    domain:"2. Security",
+    code:"2.2",
+    title:"Hardening Workstations",
+    items:[
+      "Account policies: lockout, password length/history, MFA.",
+      "Updates/patching; disable autorun; secure DNS.",
+      "Secure BIOS/UEFI: passwords, Secure Boot, drive order."
+    ],
+    flashcards:[
+      ["MFA","Combine factors (something you know/have/are)."],
+      ["Secure Boot","Blocks unsigned boot loaders."]
+    ]
+  },
+  {
+    domain:"2. Security",
+    code:"2.3",
+    title:"Wireless & Information Security Standards",
+    items:[
+      "WEP vs WPA2 vs WPA3; AES vs TKIP; SAE; open networks (OWE).",
+      "RADIUS/802.1X/Enterprise vs PSK; guest networks & captive portals.",
+      "PII/PHI handling; data classification; DLP basics."
+    ],
+    flashcards:[
+      ["WPA3","Uses SAE; stronger against offline attacks."],
+      ["802.1X","Port-based NAC with RADIUS."]
+    ]
+  },
+  {
+    domain:"2. Security",
+    code:"2.4",
+    title:"Windows Security Settings",
+    items:[
+      "Defender AV/Firewall; enabling, updating defs, exclusions.",
+      "Per-app firewall rules; inbound/outbound basics.",
+      "NTFS vs Share perms review; UAC tuning."
+    ],
+    flashcards:[
+      ["Effective permissions","Most restrictive wins."],
+      ["UAC levels","Notify behavior for user/admin."]
+    ]
+  },
+  {
+    domain:"2. Security",
+    code:"2.5",
+    title:"Encryption & Data Protection",
+    items:[
+      "BitLocker (TPM) & BitLocker To Go; EFS; recovery keys.",
+      "Device encryption on laptops/mobile; secure wipe vs shred.",
+      "Backups: full/diff/incremental tradeoffs."
+    ],
+    flashcards:[
+      ["Recovery planning","Store BitLocker recovery keys securely."],
+      ["Backup sets","Full+diff vs full+incremental."]
+    ]
+  },
+
+  /* ===== Software Troubleshooting ===== */
+  {
+    domain:"3. Software Troubleshooting",
+    code:"3.1",
+    title:"Troubleshooting Methodology & Tools",
+    items:[
+      "Apply the 6 steps; respect policies before changes.",
+      "Logs (Event Viewer), msconfig/services, Task Manager.",
+      "Safe Mode, Startup Repair, bootrec, SFC/DISM sequence."
+    ],
+    flashcards:[
+      ["Order of ops","Identify → Theory → Test → Plan → Verify → Document"],
+      ["bootrec","/fixmbr /fixboot /rebuildbcd"]
+    ]
+  },
+  {
+    domain:"3. Software Troubleshooting",
+    code:"3.2",
+    title:"Common Symptoms & Fixes",
+    items:[
+      "BSODs & crashes (drivers/RAM); app crashes; services not starting.",
+      "Browser hijack/malware; slow profile; update loops.",
+      "No-boot: missing OS, boot loops, device order issues."
+    ],
+    flashcards:[
+      ["Hijack signs","Homepage/search redirect, odd extensions."],
+      ["BSOD triage","Check recent drivers/updates; analyze stop code."]
+    ]
+  },
+
+  /* ===== Operational Procedures ===== */
+  {
+    domain:"4. Operational Procedures",
+    code:"4.1",
+    title:"Safety, Environmental & Documentation",
+    items:[
+      "ESD, MSDS/SDS, battery/toner handling, lifting safety.",
+      "Asset/inventory, ticketing, change management, SOPs.",
+      "Disposal: wipe vs degauss vs shred; chain of custody."
+    ],
+    flashcards:[
+      ["Chain of custody","Who/what/when/where for evidence handling."],
+      ["E-waste","Follow policy & legal requirements."]
+    ]
+  },
+  {
+    domain:"4. Operational Procedures",
+    code:"4.2",
+    title:"Professionalism & Best Practices",
+    items:[
+      "Communication, escalation, SLAs, documentation quality.",
+      "Remote support etiquette; permission & privacy.",
+      "Licensing basics; scope/impact assessment."
+    ],
+    flashcards:[
+      ["SLA","Uptime/response guarantees & penalties."],
+      ["Scope creep","Lock scope; change control for adds."]
+    ]
+  }
 ];
 
-/* ---------------- Practice Exams ---------------- */
-const examBank = [
-  {k:'dionA', name:'Jason Dion A'},
-  {k:'dionB', name:'Jason Dion B'},
-  {k:'dionC', name:'Jason Dion C'},
-  {k:'dionD', name:'Jason Dion D'},
-  {k:'dionE', name:'Jason Dion E'},
-  {k:'dionF', name:'Jason Dion F'},
+/* PBQ & Final 48h checklists */
+const PBQ_TASKS = [
+  "Create a Windows local user, set password policy, test UAC behavior.",
+  "Fix a no-boot: Safe Mode → Startup Repair → bootrec → SFC/DISM.",
+  "Choose correct Wi-Fi security (WPA3 vs WPA2), create firewall rule.",
+  "Resolve access denied via NTFS vs Share permissions & inheritance.",
+  "Perform malware removal in order, then post-incident hardening."
+];
+const FINAL_48 = [
+  "Redrill Windows/Linux/macOS commands & switches.",
+  "Review Operational Procedures (docs, safety, disposal, chain of custody).",
+  "Recheck security protocols & MFA/password policy concepts.",
+  "Skim your weak-topic flashcards and notes.",
+  "Sleep 7–8 hours; test center/online check-in logistics ready."
 ];
 
-/* ---------------- Flashcards (high-yield) ---------------- */
-const CARDS = [
-  ['Windows Repair Order','Safe Mode → Startup Repair → SFC → DISM → System Restore → In-place upgrade/reset (data aware)'],
-  ['sfc vs dism','SFC = verify/repair system files; DISM = repair component store (use before/after SFC when SFC can’t fix)'],
-  ['NTFS vs Share perms','Effective = most restrictive combo; NTFS applies locally & over network; Share only over network'],
-  ['BitLocker vs EFS','BitLocker = full-disk; EFS = per-file/folder (NTFS only). Both need recovery planning.'],
-  ['UAC','Limits unauthorized changes; prompts elevation for admin-level actions.'],
-  ['WPA2 vs WPA3','WPA3 uses SAE, stronger protection on open networks (OWE), mitigates brute force better than WPA2.'],
-  ['Malware removal order','Identify → Quarantine → Disable restore → Remediate (scan) → Schedule updates → Enable restore → Educate.'],
-  ['Event Viewer','Application/System/Security logs; use to correlate crashes & driver issues.'],
-  ['msconfig','Manage startup, boot options, services for troubleshooting.'],
-  ['Permissions priority','Deny overrides Allow; explicit > inherited.'],
-  ['Linux perms quickie','r=4,w=2,x=1; 755 = rwx r-x r-x'],
-  ['Common commands','ipconfig, netstat, nslookup/dig, chkdsk, diskpart, sfc, dism, gpupdate, shutdown, chmod, grep'],
-  ['Policy & docs','Change mgmt, chain of custody, incident reports, inventory, SOPs—know purpose & order.'],
-  ['User types','Standard vs Admin vs Power User; least privilege principle.'],
-  ['Backups','Full, incremental, differential—know restore speed vs storage tradeoffs.'],
-];
+/* Jason Dion exams */
+const EXAMS = ["A","B","C","D","E","F"];
 
-/* ---------------- Build UI ---------------- */
-const planEl = document.getElementById('plan');
+/* ===================== STATE ===================== */
+const KEY='a1102_andrew_tracker_v2';
+const state = load() || {
+  examDate:'', checks:{}, notes:{}, exams:{}, fc:{known:[],unknown:[],i:0,showBack:false,filter:"All"},
+  streak:0,lastDone:''
+};
+
+/* ===================== UI BUILD ===================== */
+const sectionsEl = document.getElementById('sections');
 const examsEl = document.getElementById('exams');
+const pbqEl = document.getElementById('pbq');
+const finalEl = document.getElementById('final48');
 const totalCountEl = document.getElementById('totalCount');
 
-function buildPlan(){
-  planEl.innerHTML='';
-  days.forEach((d,di)=>{
-    const box = document.createElement('div');
-    box.className='day';
-    box.innerHTML = `<h4>${d.title}</h4>
-      <div class="checklist">${d.items.map((t,ti)=>`
-        <label class="item">
-          <input type="checkbox" data-day="${di}" data-item="${ti}">
-          <span>${t}</span>
-        </label>`).join('')}</div>
-      <details><summary>Notes</summary>
-        <textarea data-day-note="${di}" placeholder="What tripped you up today? Fix it here."></textarea>
-      </details>`;
-    planEl.appendChild(box);
+function buildSections(){
+  sectionsEl.innerHTML='';
+  COURSE_MAP.forEach((s, idx)=>{
+    const id = `${s.code}-${s.title}`;
+    const div=document.createElement('div');
+    div.className='section';
+    div.innerHTML = `
+      <h4 style="margin:0">${s.domain} • ${s.code} — ${s.title}</h4>
+      <div class="list">
+        ${s.items.map((t,i)=>`
+          <label class="item"><input type="checkbox" data-k="sec:${idx}:${i}"> <span>${t}</span></label>
+        `).join('')}
+      </div>
+      <details style="margin-top:8px"><summary>Notes</summary>
+        <textarea data-note="sec:${idx}" placeholder="What didn’t stick? Summarize the fix here."></textarea>
+      </details>
+      ${s.flashcards?.length?`<details style="margin-top:8px"><summary>Section Flashcards</summary>
+        <div class="list">${s.flashcards.map(fc=>`<div class="chip"><b>${fc[0]}:</b> ${fc[1]}</div>`).join('')}</div>
+      </details>`:''}
+    `;
+    sectionsEl.appendChild(div);
   });
 }
 
 function buildExams(){
   examsEl.innerHTML='';
-  examBank.forEach((e)=>{
-    const score = state.exams[e.k]?.score ?? '';
-    const pass = state.exams[e.k]?.done || false;
-    const div = document.createElement('div');
-    div.className='day';
-    div.innerHTML = `
+  EXAMS.forEach(letter=>{
+    const k=`dion${letter}`;
+    const eDiv=document.createElement('div');
+    eDiv.className='section';
+    eDiv.innerHTML=`
       <div class="row" style="justify-content:space-between">
-        <h4 style="margin:0">${e.name}</h4>
-        <label class="pill">Score: 
-          <input type="number" min="0" max="100" step="1" data-exam-score="${e.k}" value="${score}" 
-            style="width:68px;background:#0e1622;border:1px solid #243245;color:#cfe1ff;border-radius:8px;padding:6px;margin-left:6px">%
+        <h4 style="margin:0">Jason Dion Exam ${letter}</h4>
+        <label class="pill">Score:
+          <input type="number" min="0" max="100" step="1" data-exam-score="${k}"
+            style="width:72px;background:#0e1622;border:1px solid #243245;color:#cfe1ff;border-radius:8px;padding:6px;margin-left:6px">%
         </label>
       </div>
-      <div class="inline">
-        <label class="item"><input type="checkbox" data-exam-done="${e.k}" ${pass?'checked':''}> Mark complete</label>
-        <span class="sub">Target: ≥ 80% before moving on</span>
+      <div class="row">
+        <label class="item"><input type="checkbox" data-exam-done="${k}"> Mark complete</label>
+        <select class="btn" data-exam-domain="${k}">
+          <option value="">Tag weak area →</option>
+          ${[...new Set(COURSE_MAP.map(s=>s.domain))].map(d=>`<option>${d}</option>`).join('')}
+        </select>
       </div>
-      <details style="margin-top:8px"><summary>Review notes</summary>
-        <textarea data-exam-note="${e.k}" placeholder="List unknown terms, commands, policies you missed. Make flashcards."></textarea>
+      <details style="margin-top:8px"><summary>Review notes (map misses back to sections)</summary>
+        <textarea data-exam-note="${k}" placeholder="List unknown terms + their matching section (e.g., 1.2, 2.4)."></textarea>
       </details>
     `;
-    examsEl.appendChild(div);
+    examsEl.appendChild(eDiv);
   });
 }
 
-/* ---------------- Wiring ---------------- */
-buildPlan(); buildExams();
-const checkboxes = [...document.querySelectorAll('input[type="checkbox"][data-day]')];
-const notesAreas = [...document.querySelectorAll('textarea[data-day-note]')];
+function buildPBQ(){
+  pbqEl.innerHTML= PBQ_TASKS.map((t,i)=>`
+    <label class="item"><input type="checkbox" data-k="pbq:${i}"> <span>${t}</span></label>
+  `).join('');
+}
+function buildFinal(){
+  finalEl.innerHTML= FINAL_48.map((t,i)=>`
+    <label class="item"><input type="checkbox" data-k="final:${i}"> <span>${t}</span></label>
+  `).join('');
+}
+
+buildSections(); buildExams(); buildPBQ(); buildFinal();
+
+/* Gather elements after build */
+const planChecks = [...document.querySelectorAll('input[type="checkbox"][data-k]')];
+const planNotes = [...document.querySelectorAll('textarea[data-note]')];
 const examScores = [...document.querySelectorAll('input[data-exam-score]')];
 const examDone = [...document.querySelectorAll('input[data-exam-done]')];
 const examNotes = [...document.querySelectorAll('textarea[data-exam-note]')];
-const pbqFinalChecks = [...document.querySelectorAll('input[data-k]')];
+const examDomain = [...document.querySelectorAll('select[data-exam-domain]')];
 
-function totalItems(){
-  return checkboxes.length + examDone.length + pbqFinalChecks.length;
+/* ===================== WEIGHTED PROGRESS ===================== */
+function weightedProgress(){
+  // For each domain, compute completion ratio of its items
+  const domainStats = {};
+  COURSE_MAP.forEach((s, si)=>{
+    const items = s.items.length;
+    const done = s.items.filter((_,i)=> state.checks[`sec:${si}:${i}`]).length;
+    (domainStats[s.domain]??=( {done:0,total:0} ));
+    domainStats[s.domain].done += done;
+    domainStats[s.domain].total += items;
+  });
+  let weighted=0, totalWeight=0;
+  Object.keys(DOMAIN_WEIGHTS).forEach(d=>{
+    const w = DOMAIN_WEIGHTS[d]||0;
+    const stat = domainStats[d]||{done:0,total:0};
+    const pct = stat.total? (stat.done/stat.total):0;
+    weighted += pct*w;
+    totalWeight += w;
+  });
+  return Math.round((weighted/totalWeight)*100);
 }
-function doneItems(){
-  const planDone = checkboxes.filter(c=>isChecked(c)).length;
-  const examsDone = examDone.filter(c=>isChecked(c)).length;
-  const misc = pbqFinalChecks.filter(c=>isChecked(c)).length;
-  return planDone + examsDone + misc;
+
+/* ===================== STREAK ===================== */
+function markStreak(){
+  const today=new Date().toISOString().slice(0,10);
+  if(state.lastDone===today) return;
+  if(!state.lastDone){ state.streak=1; state.lastDone=today; return; }
+  const d1=new Date(state.lastDone), d2=new Date(today);
+  const diff=(d2-d1)/(1000*60*60*24);
+  state.streak = (diff===1)? state.streak+1 : 1;
+  state.lastDone=today;
 }
-function isChecked(c){ 
-  if(c.dataset.day!==undefined) return !!state.checks[`d${c.dataset.day}_i${c.dataset.item}`];
-  if(c.dataset.examDone!==undefined) return !!state.exams[c.dataset.examDone]?.done;
-  if(c.dataset.k!==undefined) return !!state.checks[`k_${c.dataset.k}`];
-  return c.checked;
+
+/* ===================== SYNC UI ===================== */
+function totalItemsCount(){
+  const planCount = COURSE_MAP.reduce((a,s)=>a+s.items.length,0);
+  const miscCount = PBQ_TASKS.length + FINAL_48.length + EXAMS.length; // we’ll treat each exam completion as an item
+  return planCount + miscCount;
+}
+function doneItemsCount(){
+  const planDone = Object.keys(state.checks).filter(k=>k.startsWith('sec:') && state.checks[k]).length;
+  const pbqDone = PBQ_TASKS.map((_,i)=>state.checks[`pbq:${i}`]).filter(Boolean).length;
+  const finalDone = FINAL_48.map((_,i)=>state.checks[`final:${i}`]).filter(Boolean).length;
+  const examsDone = EXAMS.map(l=>state.exams[`dion${l}`]?.done).filter(Boolean).length;
+  return planDone + pbqDone + finalDone + examsDone;
 }
 
 function syncUI(){
-  // plan checks
-  checkboxes.forEach(c=>{
-    const k = `d${c.dataset.day}_i${c.dataset.item}`;
-    c.checked = !!state.checks[k];
-  });
-  // notes
-  notesAreas.forEach(t=>{
-    const k = `n${t.dataset.dayNote}`;
-    t.value = state.notes[k] ?? '';
-  });
-  // pbq/final
-  pbqFinalChecks.forEach(c=>{
-    c.checked = !!state.checks[`k_${c.dataset.k}`];
-  });
+  // checks
+  planChecks.forEach(c=> c.checked = !!state.checks[c.dataset.k]);
+  // section notes
+  planNotes.forEach(t=> t.value = state.notes[t.dataset.note] ?? '');
   // exams
   examScores.forEach(e=>{
-    const k = e.dataset.examScore;
+    const k=e.dataset.examScore;
     e.value = state.exams[k]?.score ?? '';
   });
   examDone.forEach(e=>{
-    const k = e.dataset.examDone;
+    const k=e.dataset.examDone;
     e.checked = !!state.exams[k]?.done;
   });
   examNotes.forEach(t=>{
-    const k = `e_${t.dataset.examNote}`;
+    const k=`note:${t.dataset.examNote}`;
     t.value = state.notes[k] ?? '';
   });
+  examDomain.forEach(s=>{
+    const k=s.dataset.examDomain;
+    s.value = state.exams[k]?.domain ?? '';
+  });
+
   // progress
-  const done = doneItems(), total = totalItems();
-  document.getElementById('doneCount').textContent = done;
-  totalCountEl.textContent = total;
-  const pct = total? Math.round((done/total)*100):0;
-  document.getElementById('pct').textContent = pct+'%';
-  document.getElementById('bar').style.width = pct+'%';
+  const weighted = weightedProgress();
+  const pctEl = document.getElementById('pct');
+  pctEl.textContent = weighted+'%';
+  document.getElementById('bar').style.width = weighted+'%';
+  document.getElementById('doneCount').textContent = doneItemsCount();
+  document.getElementById('totalCount').textContent = totalItemsCount();
+
+  // streak
+  document.getElementById('streak').textContent = state.streak||0;
+
+  // next up suggestion
   nextSuggestion();
+
+  // countdown
+  renderCountdown();
 }
 syncUI();
 
-/* streak */
-function markStreak(){
-  const today = new Date().toISOString().slice(0,10);
-  if(state.meta.lastDone===today) return;
-  if(state.meta.lastDone){
-    const prev = new Date(state.meta.lastDone);
-    const cur = new Date(today);
-    const diff = (cur - prev)/(1000*60*60*24);
-    state.meta.streak = (diff===1)? (state.meta.streak+1):1;
-  }else{
-    state.meta.streak = 1;
-  }
-  state.meta.lastDone = today;
-  save(); renderStreak();
-}
-function renderStreak(){
-  document.getElementById('streak').textContent = state.meta.streak||0;
-}
-renderStreak();
-
-/* handlers */
+/* ===================== EVENTS ===================== */
 document.addEventListener('change', (e)=>{
   const t=e.target;
-  if(t.matches('input[type="checkbox"][data-day]')){
-    const k=`d${t.dataset.day}_i${t.dataset.item}`;
-    state.checks[k]= t.checked;
+  if(t.matches('input[type="checkbox"][data-k]')){
+    state.checks[t.dataset.k]=t.checked;
     if(t.checked) markStreak();
     save(); syncUI();
   }
-  if(t.matches('textarea[data-day-note]')){
-    state.notes[`n${t.dataset.dayNote}`]=t.value; save();
+  if(t.matches('textarea[data-note]')){
+    state.notes[t.dataset.note]=t.value; save();
   }
   if(t.matches('input[data-exam-score]')){
     const k=t.dataset.examScore;
-    state.exams[k] = state.exams[k]||{};
-    state.exams[k].score = t.value;
-    save();
+    state.exams[k]=state.exams[k]||{};
+    state.exams[k].score=t.value; save();
   }
   if(t.matches('input[data-exam-done]')){
     const k=t.dataset.examDone;
-    state.exams[k] = state.exams[k]||{};
-    state.exams[k].done = t.checked;
+    state.exams[k]=state.exams[k]||{};
+    state.exams[k].done=t.checked;
     if(t.checked) markStreak();
     save(); syncUI();
   }
   if(t.matches('textarea[data-exam-note]')){
-    state.notes[`e_${t.dataset.examNote}`]=t.value; save();
+    const k=`note:${t.dataset.examNote}`;
+    state.notes[k]=t.value; save();
   }
-  if(t.matches('input[data-k]')){
-    state.checks[`k_${t.dataset.k}`]=t.checked;
-    if(t.checked) markStreak();
-    save(); syncUI();
+  if(t.matches('select[data-exam-domain]')){
+    const k=t.dataset.examDomain;
+    state.exams[k]=state.exams[k]||{};
+    state.exams[k].domain=t.value; save();
   }
   if(t.id==='examDate'){
     state.examDate=t.value; save(); renderCountdown();
   }
 });
 
-document.querySelectorAll('.copy').forEach(btn=>{
-  btn.addEventListener('click', ()=>copyText(btn.dataset.copy));
-});
-
-function copyText(txt){
-  navigator.clipboard.writeText(txt).then(()=>{
-    flash(btn= null, 'Copied to clipboard');
-  });
-}
-function flash(btn, msg){
-  // simple toast
-  const t=document.createElement('div');
-  t.textContent=msg;
-  t.style.cssText='position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111a29;border:1px solid #274060;padding:8px 12px;border-radius:10px;color:#cfe1ff;z-index:9999';
-  document.body.appendChild(t); setTimeout(()=>t.remove(),1300);
-}
-
-/* countdown */
-function renderCountdown(){
-  const el=document.getElementById('countdown');
-  if(!state.examDate){el.textContent='Set an exam date to get a countdown.';return;}
-  const now=new Date();
-  const d=new Date(state.examDate+'T00:00:00');
-  const diff=Math.ceil((d-now)/(1000*60*60*24));
-  el.textContent = diff>=0 ? `⏳ ${diff} day(s) until exam.` : `✅ Exam date passed (${Math.abs(diff)} day(s) ago).`;
-}
-renderCountdown();
-
-/* next up suggestion */
-function nextSuggestion(){
-  // find first unchecked in plan, else unchecked exam, else PBQ/final
-  const planNext=checkboxes.find(c=>!isChecked(c));
-  if(planNext){
-    const di=planNext.dataset.day;
-    const title=days[+di].title;
-    const text=planNext.parentElement.innerText.trim();
-    document.getElementById('nextUp').textContent = `Next up: ${title} → ${text}`;
-    return;
-  }
-  const exNext=examDone.find(c=>!isChecked(c));
-  if(exNext){
-    const nm = examBank.find(x=>x.k===exNext.dataset.examDone)?.name || 'Practice Exam';
-    document.getElementById('nextUp').textContent = `Next up: ${nm} (timed)`;
-    return;
-  }
-  const miscNext=pbqFinalChecks.find(c=>!isChecked(c));
-  if(miscNext){
-    const label = miscNext.parentElement.innerText.trim();
-    document.getElementById('nextUp').textContent = `Next up: ${label}`;
-    return;
-  }
-  document.getElementById('nextUp').textContent = 'All tasks checked. Light review + rest.';
-}
-
-/* Export / Import / Reset */
+/* Export/Import/Reset */
 document.getElementById('exportBtn').onclick=()=>{
   const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download='a1102_progress.json';a.click();
+  a.href=url;a.download='a1102_andrew_progress.json';a.click();
   URL.revokeObjectURL(url);
 };
 document.getElementById('importFile').onchange=(e)=>{
@@ -541,113 +630,173 @@ document.getElementById('importFile').onchange=(e)=>{
   r.readAsText(f);
 };
 document.getElementById('resetBtn').onclick=()=>{
-  if(confirm('This will clear all saved progress. Continue?')){
-    localStorage.removeItem(KEY); location.reload();
+  if(confirm('Clear all saved progress?')){ localStorage.removeItem(KEY); location.reload(); }
+};
+
+/* Countdown */
+function renderCountdown(){
+  const el=document.getElementById('countdown');
+  if(!state.examDate){ el.textContent='Set an exam date to get a countdown.'; return; }
+  const now=new Date();
+  const d=new Date(state.examDate+'T00:00:00');
+  const diff=Math.ceil((d-now)/(1000*60*60*24));
+  el.textContent = diff>=0 ? `⏳ ${diff} day(s) until exam.` : `✅ Exam date passed (${Math.abs(diff)} day(s) ago).`;
+}
+
+/* Next-Up (sequential by course order) */
+function nextSuggestion(){
+  // first unchecked section item in COURSE_MAP order
+  for(let si=0; si<COURSE_MAP.length; si++){
+    const s=COURSE_MAP[si];
+    for(let ii=0; ii<s.items.length; ii++){
+      if(!state.checks[`sec:${si}:${ii}`]){
+        document.getElementById('nextUp').textContent = `Next up: ${s.domain} → ${s.code} — ${s.title} → ${s.items[ii]}`;
+        return;
+      }
+    }
   }
-};
+  // else exams, then pbq, then final
+  for(const l of EXAMS){
+    if(!state.exams[`dion${l}`]?.done){
+      document.getElementById('nextUp').textContent = `Next up: Jason Dion Exam ${l} (timed)`;
+      return;
+    }
+  }
+  for(let i=0;i<PBQ_TASKS.length;i++){
+    if(!state.checks[`pbq:${i}`]){ document.getElementById('nextUp').textContent = `Next up: ${PBQ_TASKS[i]}`; return; }
+  }
+  for(let i=0;i<FINAL_48.length;i++){
+    if(!state.checks[`final:${i}`]){ document.getElementById('nextUp').textContent = `Next up: ${FINAL_48[i]}`; return; }
+  }
+  document.getElementById('nextUp').textContent = 'All tasks complete. Light review + rest.';
+}
 
-/* Dark toggle (kept for parity, default is dark) */
-document.getElementById('darkToggle').onclick=()=>{
-  state.dark=!state.dark; save();
-  flash(null, state.dark?'Dark mode':'Dark mode (still dark 😅)');
-};
+/* ===================== FLASHCARDS ===================== */
+const fcSelect = document.getElementById('fcSection');
+function fcSections(){
+  const opts = ["All", ...COURSE_MAP.map(s=>`${s.code} — ${s.title}`)];
+  fcSelect.innerHTML = opts.map(o=>`<option ${state.fc.filter===o?'selected':''}>${o}</option>`).join('');
+}
+fcSections();
+fcSelect.addEventListener('change',()=>{
+  state.fc.filter = fcSelect.value; state.fc.known=[]; state.fc.unknown=[]; state.fc.i=0; state.fc.showBack=false; save(); fcInit();
+});
 
-/* ---------------- Flashcards Engine ---------------- */
-let deck = CARDS.map((c,i)=>({id:i,front:c[0],back:c[1]}));
+function buildDeck(){
+  const pairs=[];
+  COURSE_MAP.forEach(s=>{
+    (s.flashcards||[]).forEach(fc=>{
+      pairs.push({sec:`${s.code} — ${s.title}`,front:fc[0],back:fc[1]});
+    });
+  });
+  return pairs;
+}
+let DECK = buildDeck();
+
+function filterDeck(){
+  if(state.fc.filter==="All") return DECK;
+  return DECK.filter(c=>c.sec===state.fc.filter);
+}
+
 function fcInit(){
-  if(!state.fc.known.length && !state.fc.unknown.length){
-    state.fc.unknown = deck.map(d=>d.id);
-    state.fc.known = [];
-    state.fc.i = 0; state.fc.showBack=false; save();
+  const pool = filterDeck();
+  if(!pool.length){
+    document.getElementById('fcFront').textContent='No flashcards in this section.';
+    document.getElementById('fcBack').textContent='Select “All” or another section.';
+    document.getElementById('fcStatus').textContent='';
+    return;
+  }
+  // initialize unknown as indices of pool
+  if(!state.fc.unknown.length && !state.fc.known.length){
+    state.fc.unknown = pool.map((_,i)=>i);
+    state.fc.known = []; state.fc.i=0; state.fc.showBack=false; save();
   }
   fcRender();
 }
+
 function fcCurrent(){
-  const pool = state.fc.unknown.length? state.fc.unknown : state.fc.known;
-  if(!pool.length) return null;
-  const id = pool[Math.min(state.fc.i, pool.length-1)];
-  return deck.find(d=>d.id===id);
+  const pool = filterDeck();
+  const active = state.fc.unknown.length? state.fc.unknown : state.fc.known;
+  if(!active.length) return null;
+  const idx = Math.min(state.fc.i, active.length-1);
+  return {pool, idx, card: pool[ active[idx] ]};
 }
+
 function fcRender(){
-  const card = fcCurrent();
-  const f=document.getElementById('fcFront'), b=document.getElementById('fcBack');
-  if(!card){ f.textContent='Deck empty'; b.textContent='Reset to start over.'; return; }
-  f.textContent = card.front;
-  b.textContent = state.fc.showBack? card.back : 'Tap “Flip” to reveal';
-  document.getElementById('fcStatus').textContent =
-    `Unknown: ${state.fc.unknown.length} • Known: ${state.fc.known.length}`;
+  const cur = fcCurrent();
+  const f=document.getElementById('fcFront'), b=document.getElementById('fcBack'), s=document.getElementById('fcStatus');
+  if(!cur){ f.textContent='Deck empty'; b.textContent='Reset deck'; s.textContent=''; return; }
+  f.textContent = cur.card.front + (state.fc.filter==="All" ? `  ·  ${cur.card.sec}` : "");
+  b.textContent = state.fc.showBack? cur.card.back : 'Tap “Flip” to reveal';
+  s.textContent = `Unknown: ${state.fc.unknown.length} • Known: ${state.fc.known.length}`;
 }
-function fcFlip(){ state.fc.showBack = !state.fc.showBack; save(); fcRender(); }
+
+function fcFlip(){ state.fc.showBack=!state.fc.showBack; save(); fcRender(); }
 function fcAdvance(dir=1){
-  const pool = state.fc.unknown.length? state.fc.unknown : state.fc.known;
-  state.fc.i = (state.fc.i + dir + pool.length) % pool.length;
+  const active = state.fc.unknown.length? state.fc.unknown : state.fc.known;
+  state.fc.i = (state.fc.i + dir + active.length) % active.length;
   state.fc.showBack=false; save(); fcRender();
 }
 function fcMove(toKnown){
   const cur = fcCurrent(); if(!cur) return;
-  // remove from both pools
-  state.fc.unknown = state.fc.unknown.filter(id=>id!==cur.id);
-  state.fc.known = state.fc.known.filter(id=>id!==cur.id);
-  (toKnown? state.fc.known: state.fc.unknown).push(cur.id);
+  const activeUnknown = state.fc.unknown;
+  const activeKnown = state.fc.known;
+  // remove from pools
+  state.fc.unknown = activeUnknown.filter(i=>i!==activeUnknown[state.fc.i]);
+  state.fc.known   = activeKnown.filter(i=>i!==activeUnknown[state.fc.i]);
+  (toKnown? state.fc.known: state.fc.unknown).push(cur.pool.indexOf(cur.card));
   state.fc.showBack=false; save(); fcRender();
 }
 document.getElementById('fcFlip').onclick=fcFlip;
 document.getElementById('fcPrev').onclick=()=>fcAdvance(-1);
 document.getElementById('fcKnown').onclick=()=>fcMove(true);
 document.getElementById('fcUnknown').onclick=()=>fcMove(false);
-document.getElementById('fcReset').onclick=()=>{
-  state.fc={known:[],unknown:[],i:0,showBack:false}; save(); fcInit();
-};
+document.getElementById('fcReset').onclick=()=>{ state.fc.known=[]; state.fc.unknown=[]; state.fc.i=0; state.fc.showBack=false; save(); fcInit(); };
 fcInit();
 
-/* ---------------- Glossary Search ---------------- */
+/* ===================== GLOSSARY SEARCH ===================== */
 const GLOSSARY = [
  {k:'sfc',v:'System File Checker — verify/repair protected Windows files.'},
- {k:'dism',v:'Deployment Image Servicing and Management — repair Windows component store.'},
- {k:'bitlocker',v:'Full-disk encryption for Windows.'},
+ {k:'dism',v:'Deployment Image Servicing and Management — repair component store.'},
+ {k:'bitlocker',v:'Full-disk encryption for Windows (TPM recommended).'},
  {k:'efs',v:'Encrypting File System — per-file encryption (NTFS only).'},
- {k:'uac',v:'User Account Control — consent prompts for elevation.'},
- {k:'ntfs',v:'Permissions: read/write/modify/full. Effective perms are most restrictive.'},
- {k:'share permissions',v:'Apply only over network; combine with NTFS (most restrictive wins).'},
- {k:'wpa2',v:'Wi-Fi security (AES); replaced by WPA3 for stronger auth.'},
- {k:'wpa3',v:'Wi-Fi security using SAE; better against offline attacks.'},
- {k:'apipa',v:'169.254.x.x automatic addressing when no DHCP lease (Core 1 refresher).'},
- {k:'bsod',v:'Blue Screen of Death — kernel-level crash; check drivers, RAM, logs.'},
+ {k:'uac',v:'User Account Control — prompts for elevation.'},
+ {k:'ntfs',v:'Permissions: read/write/modify/full. Most restrictive takes effect.'},
+ {k:'share permissions',v:'Apply only over network; combine with NTFS.'},
+ {k:'wpa2',v:'Wi-Fi security (AES/TKIP) — legacy compared to WPA3.'},
+ {k:'wpa3',v:'Wi-Fi security using SAE; better resistance to offline attacks.'},
+ {k:'apipa',v:'169.254.x.x when no DHCP lease (Core 1 refresher).'},
+ {k:'bsod',v:'Kernel crash; check drivers, RAM, recent changes.'},
  {k:'gpupdate',v:'Refresh Group Policy (Windows).'},
  {k:'chmod',v:'Change file mode bits (Linux/macOS).'},
- {k:'grep',v:'Search text with regex; use -R for recursive.'},
- {k:'chain of custody',v:'Evidence handling documentation for legal/forensics.'},
- {k:'least privilege',v:'Give users only the access needed to do their job.'},
- {k:'phishing',v:'Social engineering via email/messages to steal info.'},
+ {k:'grep',v:'Search text with regex; -R for recursive.'},
+ {k:'chain of custody',v:'Evidence handling log for forensics.'},
+ {k:'mfa',v:'Multi-factor auth: know/have/are.'},
  {k:'sla',v:'Service Level Agreement — uptime/response guarantees.'},
 ];
 const resEl=document.getElementById('results');
 document.getElementById('search').addEventListener('input', e=>{
   const q=e.target.value.toLowerCase().trim();
-  resEl.innerHTML='';
-  if(!q) return;
+  resEl.innerHTML=''; if(!q) return;
   GLOSSARY.filter(x=>x.k.includes(q)||x.v.toLowerCase().includes(q)).slice(0,12).forEach(x=>{
-    const row=document.createElement('div');
-    row.className='chip';
-    row.innerHTML = `<b>${x.k}</b> — ${x.v}`;
-    resEl.appendChild(row);
+    const row=document.createElement('div'); row.className='chip'; row.innerHTML = `<b>${x.k}</b> — ${x.v}`; resEl.appendChild(row);
   });
 });
 
-/* ---------------- Persistence ---------------- */
+/* ===================== COPY BUTTONS ===================== */
+document.querySelectorAll('.copy').forEach(btn=>{
+  btn.addEventListener('click', ()=>navigator.clipboard.writeText(btn.dataset.copy));
+});
+
+/* ===================== STORAGE ===================== */
 function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
 function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||''); }catch(e){ return null; } }
 
-/* ---------------- Misc ---------------- */
+/* Init exam date */
 document.addEventListener('DOMContentLoaded',()=>{
-  // Pre-check saved items
-  syncUI();
-  // Exam date from state
   if(state.examDate) document.getElementById('examDate').value=state.examDate;
+  syncUI();
 });
-
-/* keep progress up to date */
-setInterval(()=>{ renderCountdown(); }, 60*1000);
 </script>
 </body>
 </html>
