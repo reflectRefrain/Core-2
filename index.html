@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CompTIA A+ 220-1102 3-Week Study Tracker</title>
+<title>CompTIA A+ 220-1102 Study Tracker</title>
 <style>
     body {
         font-family: "Segoe UI", Tahoma, sans-serif;
@@ -12,9 +12,7 @@
         color: #333;
         margin: 0;
         padding: 0;
-        /* Soft background gradient for a calming effect */
         background: linear-gradient(to bottom, #d6f0ff 0%, #f0fff4 100%);
-        /* fallback solid color for older browsers */
         background-color: #f0fff4;
     }
     header {
@@ -22,578 +20,354 @@
         padding: 1em;
         background: rgba(255,255,255,0.8);
     }
-    header h1 {
-        font-size: 1.5em;
-        margin: 0.2em;
-    }
-    header p {
-        margin: 0.2em;
-        font-size: 1em;
-    }
-    .progress-container {
-        max-width: 600px;
-        margin: 0.5em auto;
-        text-align: center;
-    }
+    header h1 { font-size: 1.5em; margin: 0.2em; }
+    header p { margin: 0.2em; font-size: 1em; }
+    .progress-container { max-width: 600px; margin: 0.5em auto; text-align: center; }
     #progress-bar-bg {
-        width: 90%;
-        max-width: 500px;
-        height: 20px;
-        background: #e0e0e0;
-        border-radius: 10px;
-        margin: 0.5em auto;
-        overflow: hidden;
+        width: 90%; max-width: 500px; height: 20px; background: #e0e0e0;
+        border-radius: 10px; margin: 0.5em auto; overflow: hidden;
     }
-    #progress-bar {
-        height: 100%;
-        width: 0%;
-        background: #90c695;
-        /* a gentle green */
-        transition: width 0.3s ease;
-    }
-    #progress-text {
-        font-size: 0.9em;
-    }
-    nav {
-        text-align: center;
-        margin: 1em auto;
-    }
+    #progress-bar { height: 100%; width: 0%; background: #90c695; transition: width 0.3s ease; }
+    #progress-text { font-size: 0.9em; }
+    nav { text-align: center; margin: 1em auto; }
     nav a {
-        color: #005080;
-        text-decoration: none;
-        margin: 0 0.5em;
-        font-weight: bold;
+        color: #005080; text-decoration: none; margin: 0 0.5em; font-weight: bold;
     }
-    nav a:hover {
-        text-decoration: underline;
-    }
+    nav a:hover { text-decoration: underline; }
     .resources {
-        max-width: 800px;
-        margin: 1em auto;
-        background: rgba(255,255,255,0.8);
-        padding: 0.5em 1em;
-        border-radius: 5px;
+        max-width: 800px; margin: 1em auto; background: rgba(255,255,255,0.8);
+        padding: 0.5em 1em; border-radius: 5px;
     }
-    .resources h2 {
-        font-size: 1.2em;
-        margin-top: 0;
-    }
-    .resources ul {
-        list-style: none;
-        padding-left: 1em;
-    }
-    .resources li {
-        margin: 0.3em 0;
-    }
-    .resources a {
-        color: #0645AD;
-    }
-    main {
-        max-width: 800px;
-        margin: 1em auto;
-        padding: 0 0.5em;
-    }
-    details {
-        margin: 0.5em 0;
-        background: rgba(255,255,255,0.8);
-        border-radius: 5px;
-    }
+    .resources h2 { font-size: 1.2em; margin-top: 0; }
+    .resources ul { list-style: none; padding-left: 1em; }
+    .resources li { margin: 0.3em 0; }
+    .resources a { color: #0645AD; }
+    main { max-width: 900px; margin: 1em auto; padding: 0 0.5em; }
+    details { margin: 0.5em 0; background: rgba(255,255,255,0.9); border-radius: 5px; }
     details summary {
-        cursor: pointer;
-        padding: 0.5em;
-        font-weight: bold;
-        font-size: 1.05em;
-        outline: none;
-        /* soft highlight for summary header */
-        background: #e8f4ff;
-        border-radius: 5px;
+        cursor: pointer; padding: 0.6em 0.8em; font-weight: bold; font-size: 1.05em;
+        outline: none; background: #e8f4ff; border-radius: 5px;
     }
-    details[open] summary {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+    details[open] summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+    .section-content { padding: 0.6em 1em 0.8em 1.2em; }
+    .section-content ul { margin: 0.3em 0 0.6em; }
+    .section-done {
+        display: inline-flex; align-items: center; gap: 0.4em; margin: 0.4em 0 0.8em;
     }
-    .day-content {
-        padding: 0.5em 1em 0.5em 1.5em;
-    }
-    .tasks {
-        list-style: none;
-        padding: 0;
-        margin: 0.5em 0;
-    }
-    .tasks li {
-        margin: 0.4em 0;
-    }
-    .tasks input[type=checkbox] {
-        /* slightly larger checkbox for easier tapping */
-        transform: scale(1.2);
-        margin-right: 0.5em;
-    }
+    .section-done input { transform: scale(1.2); }
     .note {
-        background: #fff9e6;
-        border-left: 4px solid #ffd42a;
-        padding: 0.4em 0.6em;
-        margin: 0.5em 0;
-        font-size: 0.95em;
-        border-radius: 3px;
+        background: #fff9e6; border-left: 4px solid #ffd42a; padding: 0.4em 0.6em;
+        margin: 0.6em 0; font-size: 0.95em; border-radius: 3px;
     }
-    .note:before {
-        content: "💡 ";
-    }
-    #glossary-section {
-        margin: 2em 0 1em;
-    }
-    #glossary-section input {
-        width: 100%;
-        max-width: 300px;
-        padding: 0.3em;
-        margin: 0.5em 0;
-        font-size: 1em;
-    }
-    #glossary-list {
-        list-style: none;
-        padding: 0;
-        margin: 0.5em 0;
-    }
-    #glossary-list li {
-        margin: 0.3em 0;
-    }
-    #glossary-list li::before {
-        content: "• ";
-        color: #555;
-    }
-    #quiz-section {
-        margin: 2em 0 1em;
-    }
-    .quiz-q {
-        margin: 1em 0;
-    }
-    .quiz-q p {
-        font-weight: bold;
-    }
-    .quiz-q ul {
-        list-style: none;
-        padding-left: 0;
-    }
-    .quiz-q li {
-        margin: 0.3em 0;
-    }
-    .quiz-q button {
-        margin-top: 0.5em;
-    }
-    .quiz-result {
-        margin-top: 0.3em;
-        font-weight: bold;
-    }
+    .note:before { content: "💡 "; }
     #congrats {
-        display: none;
-        text-align: center;
-        margin: 2em;
-        font-size: 1.2em;
-        color: #2a662a;
+        display: none; text-align: center; margin: 2em; font-size: 1.2em; color: #2a662a;
     }
+    .time { color: #555; font-size: 0.95em; }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>CompTIA A+ Core 2 (220-1102) – 3 Week Study Plan</h1>
-    <p>Your personal study tracker for the A+ Core 2 exam</p>
+    <h1>CompTIA A+ Core 2 (220-1102) – Study Tracker</h1>
+    <p>Your personal outline-based tracker for Core 2</p>
     <div class="progress-container">
-        <div id="progress-bar-bg">
-            <div id="progress-bar"></div>
-        </div>
+        <div id="progress-bar-bg"><div id="progress-bar"></div></div>
         <div id="progress-text">0% complete</div>
         <div id="countdown"></div>
     </div>
 </header>
 
 <nav>
-    <a href="#day1">Day 1</a> |
-    <a href="#day5">Day 5</a> |
-    <a href="#day10">Day 10</a> |
-    <a href="#day14">Day 14</a> |
-    <a href="#glossary">Glossary</a> |
-    <a href="#quiz">Quick Quiz</a>
+    <a href="#sec1">Ch.1 Intro</a> |
+    <a href="#sec2">Ch.2 OS Basics</a> |
+    <a href="#sec9">Ch.9 Storage</a> |
+    <a href="#sec11">Ch.11 Install</a> |
+    <a href="#sec15">Ch.15 CLI</a> |
+    <a href="#sec17_21">Networking</a> |
+    <a href="#sec23_25">Mobile</a> |
+    <a href="#sec27_28">Sec & Docs</a> |
+    <a href="#final_prep">Final Prep</a>
 </nav>
 
 <div class="resources">
     <h2>Study Resources</h2>
     <ul>
-        <li><a href="https://www.udemy.com/course/comptia-aplus-core-2/" target="_blank">Udemy – Mike Meyers’ A+ Core 2 Course</a></li>
-        <li><a href="https://www.udemy.com/course/comptia-a-220-1102-core-2-practice-exams-new-for-2022/" target="_blank">Udemy – Jason Dion’s Core 2 Practice Exams</a></li>
-        <li><a href="https://www.professormesser.com/free-a-plus-training/220-1102/220-1102-video/220-1102-training-course/" target="_blank">Professor Messer’s Free 220-1102 Video Course</a></li>
-        <li><a href="https://certblaster.com/wp-content/uploads/2022/11/CompTIA-A-220-1102-Exam-Objectives.pdf" target="_blank">Official CompTIA 220-1102 Exam Objectives (PDF)</a></li>
-        <li><a href="https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests#CompTIA_A%2B_Certification_Exam_Core_2_(220-1102)_Practice_Tests" target="_blank">ExamCompass – Free A+ Core 2 Practice Quizzes</a></li>
+        <li><a href="https://www.udemy.com/course/comptia-aplus-core-2/" target="_blank">Udemy — Mike Meyers’ A+ Core 2</a></li>
+        <li><a href="https://www.udemy.com/course/comptia-a-220-1102-core-2-practice-exams-new-for-2022/" target="_blank">Udemy — Jason Dion Core 2 Practice Exams</a></li>
+        <li><a href="https://www.professormesser.com/free-a-plus-training/220-1102/220-1102-video/220-1102-training-course/" target="_blank">Professor Messer — Free Core 2 Course</a></li>
+        <li><a href="https://certblaster.com/wp-content/uploads/2022/11/CompTIA-A-220-1102-Exam-Objectives.pdf" target="_blank">Official 220-1102 Exam Objectives (PDF)</a></li>
+        <li><a href="https://www.examcompass.com/comptia/a-plus-certification/free-a-plus-practice-tests#CompTIA_A%2B_Certification_Exam_Core_2_(220-1102)_Practice_Tests" target="_blank">ExamCompass — Free Core 2 Quizzes</a></li>
     </ul>
 </div>
 
 <main>
-    <details id="day1" open>
-        <summary>Day 1 – Course Introduction & Exam Setup</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day1-task1"> Watch Section 1 (Introduction) videos in Mike Meyers’ course</label></li>
-                <li><label><input type="checkbox" id="day1-task2"> Note the exam objectives and format (90 questions, PBQs, passing score etc.)</label></li>
-                <li><label><input type="checkbox" id="day1-task3"> Set up study environment (e.g., install Udemy app, download course videos)</label></li>
-                <li><label><input type="checkbox" id="day1-task4"> Schedule your Core 2 exam for ~3 weeks from now</label></li>
-                <li><label><input type="checkbox" id="day1-task5"> Take the course’s intro quiz (if available)</label></li>
+
+    <!-- Ch.1 -->
+    <details id="sec1" open>
+        <summary>Chapter 1 — Introduction</summary>
+        <div class="section-content">
+            <ul>
+                <li>1. What is the CompTIA A+? <span class="time">2 min</span></li>
+                <li>2. Why Get CompTIA A+ Certified? <span class="time">5 min</span></li>
+                <li>3. How to Take the A+ Exam <span class="time">2 min</span></li>
+                <li>4. What's on the Core 2 Exam? <span class="time">4 min</span></li>
+                <li>5. How to Pass the A+ Exams <span class="time">2 min</span></li>
+                <li>6. How to Use This Video Course <span class="time">2 min</span></li>
+                <li>7. Professional Communication, Part 1 <span class="time">6 min</span></li>
+                <li>8. Professional Communication, Part 2 <span class="time">7 min</span></li>
+                <li>9. Dealing with Difficult Customers <span class="time">5 min</span></li>
+                <li>10. Physical Safety <span class="time">7 min</span></li>
             </ul>
-            <div class="note">Get committed: scheduling the exam now will keep you motivated!</div>
+            <div class="section-done"><input type="checkbox" id="sec1-done"><label for="sec1-done">Mark Chapter 1 complete (Quiz 1 done)</label></div>
         </div>
     </details>
 
-    <details id="day2">
-        <summary>Day 2 – Operating Systems (Windows)</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day2-task1"> Watch OS lectures on Windows 10/11 features, editions, and installation methods</label></li>
-                <li><label><input type="checkbox" id="day2-task2"> Note differences (Home vs Pro vs Enterprise, 32-bit vs 64-bit, etc.)</label></li>
-                <li><label><input type="checkbox" id="day2-task3"> Practice a Windows installation or explore administrative tools (MMC, Event Viewer)</label></li>
-                <li><label><input type="checkbox" id="day2-task4"> Complete the end-of-section quiz on Windows OS topics</label></li>
+    <!-- Ch.2 -->
+    <details id="sec2">
+        <summary>Chapter 2 — Safety & OS Basics</summary>
+        <div class="section-content">
+            <ul>
+                <li>11. Common Safety Procedures <span class="time">4 min</span></li>
+                <li>12. What Is an Operating System? <span class="time">9 min</span></li>
+                <li>13. Users and Super Users <span class="time">5 min</span></li>
+                <li>14. Why Windows? <span class="time">8 min</span></li>
+                <li>15. Touring Windows 10 and 11 <span class="time">5 min</span></li>
+                <li>16. Touring macOS <span class="time">6 min</span></li>
+                <li>17. Touring Linux <span class="time">8 min</span></li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec2-done"><label for="sec2-done">Mark Chapter 2 complete (Quiz 2 done)</label></div>
         </div>
     </details>
 
-    <details id="day3">
-        <summary>Day 3 – Operating Systems (macOS, Linux, Mobile)</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day3-task1"> Watch lectures on macOS and Linux basics (file systems, update tools, common commands)</label></li>
-                <li><label><input type="checkbox" id="day3-task2"> Learn mobile OS concepts (Android vs iOS features and update methods)</label></li>
-                <li><label><input type="checkbox" id="day3-task3"> Practice basic Linux commands in a terminal or online sandbox</label></li>
-                <li><label><input type="checkbox" id="day3-task4"> Take the full Operating Systems section quiz (covering Windows, macOS, Linux, mobile)</label></li>
+    <!-- Ch.7 -->
+    <details id="sec7">
+        <summary>Chapter 7 — Power</summary>
+        <div class="section-content">
+            <ul>
+                <li>18. Power Protection <span class="time">9 min</span></li>
             </ul>
-            <div class="note">Hands-on practice (like trying out Linux commands) will reinforce your OS knowledge.</div>
+            <div class="section-done"><input type="checkbox" id="sec7-done"><label for="sec7-done">Mark Chapter 7 complete (Quiz 3 done)</label></div>
         </div>
     </details>
 
-    <details id="day4">
-        <summary>Day 4 – Security Fundamentals</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day4-task1"> Watch Security lectures (malware types, removal best practices, security devices, Windows security settings)</label></li>
-                <li><label><input type="checkbox" id="day4-task2"> Make flashcards for key security terms and acronyms (e.g. phishing vs spear-phishing, AES, MFA)</label></li>
-                <li><label><input type="checkbox" id="day4-task3"> (If available) Complete any security lab/demo (e.g., running an antivirus scan)</label></li>
-                <li><label><input type="checkbox" id="day4-task4"> Take the Security section quiz and review explanations for any missed questions</label></li>
+    <!-- Ch.8 -->
+    <details id="sec8">
+        <summary>Chapter 8 — Boot & Storage (Intro)</summary>
+        <div class="section-content">
+            <ul>
+                <li>19. Boot Order <span class="time">7 min</span></li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec8-done"><label for="sec8-done">Mark Chapter 8 complete (Quiz 4 done)</label></div>
         </div>
     </details>
 
-    <details id="day5">
-        <summary>Day 5 – Software Troubleshooting</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day5-task1"> Watch Software Troubleshooting lectures (common OS & application issues, mobile troubleshooting)</label></li>
-                <li><label><input type="checkbox" id="day5-task2"> Practice using Windows troubleshooting tools (Safe Mode, MSCONFIG, SFC, etc.)</label></li>
-                <li><label><input type="checkbox" id="day5-task3"> Review the CompTIA 6-step troubleshooting process</label></li>
-                <li><label><input type="checkbox" id="day5-task4"> Take the Troubleshooting section quiz and analyze your mistakes</label></li>
+    <!-- Ch.9 -->
+    <details id="sec9">
+        <summary>Chapter 9 — Storage Management</summary>
+        <div class="section-content">
+            <ul>
+                <li>20–30. Partitioning, MBR vs GPT, File Systems, Formatting, Dynamic Disks, Storage Spaces, Encryption, Maintenance <span class="time">various</span></li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec9-done"><label for="sec9-done">Mark Chapter 9 complete (Quiz 5 done)</label></div>
         </div>
     </details>
 
-    <details id="day6">
-        <summary>Day 6 – Operational Procedures</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day6-task1"> Watch Operational Procedures lectures (safety measures, documentation, professionalism)</label></li>
-                <li><label><input type="checkbox" id="day6-task2"> Review best practices for safety (ESD prevention, safe equipment disposal)</label></li>
-                <li><label><input type="checkbox" id="day6-task3"> Review customer service and communication tips</label></li>
-                <li><label><input type="checkbox" id="day6-task4"> Take the Operational Procedures quiz</label></li>
+    <!-- Ch.10 -->
+    <details id="sec10">
+        <summary>Chapter 10 — Peripherals</summary>
+        <div class="section-content">
+            <ul>
+                <li>31. Understanding USB <span class="time">11 min</span></li>
+                <li>32. Webcams and Videoconferencing <span class="time">3 min</span></li>
             </ul>
-            <div class="note">Congratulations, you've covered all core content domains! Take a well-deserved break next.</div>
+            <div class="section-done"><input type="checkbox" id="sec10-done"><label for="sec10-done">Mark Chapter 10 complete (Quiz 6 done)</label></div>
         </div>
     </details>
 
-    <details id="day7">
-        <summary>Day 7 – Full-Length Practice Exam 1</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day7-task1"> Take Jason Dion Practice Exam #1 (90 questions, 90 min, exam-simulated conditions)</label></li>
-                <li><label><input type="checkbox" id="day7-task2"> Review your score and all explanations. Note weak areas/topics you missed</label></li>
+    <!-- Ch.11 -->
+    <details id="sec11">
+        <summary>Chapter 11 — Installing Operating Systems</summary>
+        <div class="section-content">
+            <ul>
+                <li>33–39. Windows 10/11 Features, Boot Methods, Install/Upgrade, Post-Install, Linux Install, macOS Upgrade</li>
             </ul>
-            <div class="note">Aim to simulate real exam conditions: no notes, time yourself strictly.</div>
+            <div class="section-done"><input type="checkbox" id="sec11-done"><label for="sec11-done">Mark Chapter 11 complete (Quiz 7 done)</label></div>
         </div>
     </details>
 
-    <details id="day8">
-        <summary>Day 8 – Practice Exam 2 & Review</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day8-task1"> Take Practice Exam #2 under timed, exam-like conditions</label></li>
-                <li><label><input type="checkbox" id="day8-task2"> Review results carefully. Update your notes or create a “weak topics” cheat sheet</label></li>
-                <li><label><input type="checkbox" id="day8-task3"> Analyze patterns: Identify any topics that gave you trouble on both Exam 1 and 2</label></li>
+    <!-- Ch.12 -->
+    <details id="sec12">
+        <summary>Chapter 12 — OS Tools</summary>
+        <div class="section-content">
+            <ul>
+                <li>40–45. Task Manager, Control Panel, Settings, MMC, Registry, macOS Core Tools</li>
             </ul>
-            <div class="note">If you're feeling fatigued, consider taking a day off after this to recharge.</div>
+            <div class="section-done"><input type="checkbox" id="sec12-done"><label for="sec12-done">Mark Chapter 12 complete (Quiz 8 done)</label></div>
         </div>
     </details>
 
-    <details id="day9">
-        <summary>Day 9 – Practice Exam 3</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day9-task1"> Take Practice Exam #3 (aim to improve your score and confidence)</label></li>
-                <li><label><input type="checkbox" id="day9-task2"> Review all answers. Pay special attention to any Performance-Based Questions (PBQs) and their solutions</label></li>
+    <!-- Ch.13 -->
+    <details id="sec13">
+        <summary>Chapter 13 — Users, Permissions, and Security</summary>
+        <div class="section-content">
+            <ul>
+                <li>46–52. Users/Groups, NTFS, *nix Perms, File Explorer, Sharing, Security Policies</li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec13-done"><label for="sec13-done">Mark Chapter 13 complete (Quiz 9 done)</label></div>
         </div>
     </details>
 
-    <details id="day10">
-        <summary>Day 10 – Practice Exam 4</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day10-task1"> Take Practice Exam #4</label></li>
-                <li><label><input type="checkbox" id="day10-task2"> Thoroughly review mistakes. Revisit any remaining weak topics via course videos or notes</label></li>
+    <!-- Ch.14 -->
+    <details id="sec14">
+        <summary>Chapter 14 — Maintenance & Backup</summary>
+        <div class="section-content">
+            <ul>
+                <li>53–58. OS Maintenance, App Workflows, Backup (Win/macOS/Linux)</li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec14-done"><label for="sec14-done">Mark Chapter 14 complete (Quiz 10 done)</label></div>
         </div>
     </details>
 
-    <details id="day11">
-        <summary>Day 11 – Practice Exam 5</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day11-task1"> Take Practice Exam #5 (push for your best score yet)</label></li>
-                <li><label><input type="checkbox" id="day11-task2"> Do hands-on refreshers for any topic still uncertain (e.g., experiment with a Windows setting or Linux command in a lab)</label></li>
+    <!-- Ch.15 -->
+    <details id="sec15">
+        <summary>Chapter 15 — Command Line & Scripting</summary>
+        <div class="section-content">
+            <ul>
+                <li>59–70. CLI Basics, Files/Folders/Drives, Copy Tools, Permissions, Advanced Win/*nix Commands, Scripting</li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec15-done"><label for="sec15-done">Mark Chapter 15 complete (Quiz 11 done)</label></div>
         </div>
     </details>
 
-    <details id="day12">
-        <summary>Day 12 – Practice Exam 6 & Final Review</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day12-task1"> Take Practice Exam #6 (final mock exam, target ~90% score)</label></li>
-                <li><label><input type="checkbox" id="day12-task2"> Review all incorrect answers and ensure you understand the solutions</label></li>
-                <li><label><input type="checkbox" id="day12-task3"> Review your study notes, flashcards, and glossary for a comprehensive refresh</label></li>
-                <li><label><input type="checkbox" id="day12-task4"> Double-check you know common acronyms and the CompTIA troubleshooting steps</label></li>
+    <!-- Ch.16 -->
+    <details id="sec16">
+        <summary>Chapter 16 — Troubleshooting OS Issues</summary>
+        <div class="section-content">
+            <ul>
+                <li>71–76. WinRE, Startup Options, Boot Troubles, GUI/App Troubles, Kernel Panic</li>
             </ul>
-            <div class="note">You've done it! All preparation is complete. Tomorrow, fully rest to be at peak performance for the exam.</div>
+            <div class="section-done"><input type="checkbox" id="sec16-done"><label for="sec16-done">Mark Chapter 16 complete (Quiz 12 done)</label></div>
         </div>
     </details>
 
-    <details id="day13">
-        <summary>Day 13 – REST Day (No Studying)</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day13-task1"> Take a full day off from studying – let your brain rest and recharge</label></li>
-                <li><label><input type="checkbox" id="day13-task2"> Prepare for exam day: ensure your ID, exam confirmation, and materials are ready</label></li>
-                <li><label><input type="checkbox" id="day13-task3"> Adjust your sleep schedule if needed (wake up early today so you can sleep early tonight)</label></li>
+    <!-- Networking (17–21) -->
+    <details id="sec17_21">
+        <summary>Ch. 17–21 — Networking Fundamentals</summary>
+        <div class="section-content">
+            <ul>
+                <li>77–96. TCP/IP, Subnetting, Special IPs, NAT, DHCP, Connections, DNS, Workgroups/AD, Routers, Firewalls, Port Forwarding, VLANs</li>
+                <li>97–101. WAP Setup, Wireless Encryption, Wi-Fi Connections, Enterprise Wireless, Wireless Troubleshooting</li>
+                <li>102–110. Telnet/SSH, RDP, WWW, FTP, Proxies, VPNs, IoT, Internet Troubles, Browser Security</li>
             </ul>
-            <div class="note">Relax and get a good night's sleep. Avoid last-minute cramming or anything that might disrupt your rest.</div>
+            <div class="section-done"><input type="checkbox" id="sec17_21-done"><label for="sec17_21-done">Mark Networking complete (Quizzes 13–15 done)</label></div>
         </div>
     </details>
 
-    <details id="day14">
-        <summary>Day 14 – Exam Day 🎉</summary>
-        <div class="day-content">
-            <ul class="tasks">
-                <li><label><input type="checkbox" id="day14-task1"> Morning routine: do some light exercise to wake up, and eat a healthy breakfast</label></li>
-                <li><label><input type="checkbox" id="day14-task2"> Arrive at the testing center early (or set up your online proctored environment early)</label></li>
-                <li><label><input type="checkbox" id="day14-task3"> Stay calm and confident during the exam – manage your time and use the techniques you practiced</label></li>
-                <li><label><input type="checkbox" id="day14-task4"> <strong>Take the CompTIA A+ Core 2 exam</strong> (and celebrate afterwards!)</label></li>
+    <!-- Mobile (23–25) -->
+    <details id="sec23_25">
+        <summary>Ch. 23–25 — Mobile Devices</summary>
+        <div class="section-content">
+            <ul>
+                <li>111. Power Management</li>
+                <li>112–114. Android, iOS, Virtual Reality</li>
+                <li>115–118. Mobile Maintenance, Email, Security, Troubleshooting</li>
             </ul>
-            <div class="note">You've prepared thoroughly. Trust your knowledge and do your best. Good luck!</div>
+            <div class="section-done"><input type="checkbox" id="sec23_25-done"><label for="sec23_25-done">Mark Mobile complete (Quizzes 16–18 done)</label></div>
         </div>
     </details>
 
-    <details id="glossary">
-        <summary>Glossary of Common Terms & Acronyms</summary>
-        <div class="day-content" id="glossary-section">
-            <input type="text" id="glossary-search" placeholder="Search terms..." />
-            <ul id="glossary-list">
-                <li><strong>AC</strong> – Alternating Current</li>
-                <li><strong>AES</strong> – Advanced Encryption Standard</li>
-                <li><strong>BIOS</strong> – Basic Input/Output System</li>
-                <li><strong>BYOD</strong> – Bring Your Own Device</li>
-                <li><strong>DLP</strong> – Data Loss Prevention</li>
-                <li><strong>IDS</strong> – Intrusion Detection System</li>
-                <li><strong>IP</strong> – Internet Protocol (also an Internet Protocol address contextually)</li>
-                <li><strong>IPS</strong> – Intrusion Prevention System</li>
-                <li><strong>MMC</strong> – Microsoft Management Console</li>
-                <li><strong>NFC</strong> – Near-Field Communication</li>
-                <li><strong>NTFS</strong> – NT File System (Windows file system format)</li>
-                <li><strong>PBQ</strong> – Performance-Based Question</li>
-                <li><strong>RAM</strong> – Random Access Memory</li>
-                <li><strong>RDP</strong> – Remote Desktop Protocol</li>
-                <li><strong>RSA</strong> – A public-key encryption technology (Rivest–Shamir–Adleman)</li>
-                <li><strong>SFC</strong> – System File Checker (Windows utility)</li>
-                <li><strong>SSH</strong> – Secure Shell (encrypted network protocol)</li>
-                <li><strong>TPM</strong> – Trusted Platform Module</li>
-                <li><strong>UTM</strong> – Unified Threat Management (all-in-one security appliance)</li>
-                <li><strong>VPN</strong> – Virtual Private Network</li>
-                <li><strong>WPA2</strong> – Wi-Fi Protected Access 2 (wireless security standard)</li>
+    <!-- Security & Documentation (27–28) -->
+    <details id="sec27_28">
+        <summary>Ch. 27–28 — Security & Documentation</summary>
+        <div class="section-content">
+            <ul>
+                <li>119–126. Threats, Countermeasures, Physical Security, Auth/MFA, Malware & Anti-Malware, Social Engineering</li>
+                <li>127–130. Licensing, Incident Response, Environmental Controls, Malware in Action</li>
+                <li>131–136. Docs & Data, Change Mgmt, Backup, Recycling/Data Destruction, Ticketing</li>
             </ul>
+            <div class="section-done"><input type="checkbox" id="sec27_28-done"><label for="sec27_28-done">Mark Security & Docs complete (Quizzes 19–20 done)</label></div>
         </div>
     </details>
 
-    <details id="quiz">
-        <summary>Quick Quiz – Test Your Knowledge</summary>
-        <div class="day-content" id="quiz-section">
-            <div class="quiz-q">
-                <p>1. What port number is used by the Remote Desktop Protocol (RDP)?</p>
-                <ul>
-                    <li><label><input type="radio" name="q1" value="22"> 22</label></li>
-                    <li><label><input type="radio" name="q1" value="80"> 80</label></li>
-                    <li><label><input type="radio" name="q1" value="3389" id="q1-correct"> 3389</label></li>
-                    <li><label><input type="radio" name="q1" value="443"> 443</label></li>
-                </ul>
-                <button onclick="checkQ1()">Check Answer</button>
-                <div id="result1" class="quiz-result"></div>
-            </div>
-            <div class="quiz-q">
-                <p>2. Which Windows command-line utility can scan for and repair corrupted system files?</p>
-                <ul>
-                    <li><label><input type="radio" name="q2" value="CHKDSK"> CHKDSK</label></li>
-                    <li><label><input type="radio" name="q2" value="SFC" id="q2-correct"> SFC</label></li>
-                    <li><label><input type="radio" name="q2" value="GPUPDATE"> GPUPDATE</label></li>
-                    <li><label><input type="radio" name="q2" value="TASKKILL"> TASKKILL</label></li>
-                </ul>
-                <button onclick="checkQ2()">Check Answer</button>
-                <div id="result2" class="quiz-result"></div>
-            </div>
-            <div class="quiz-q">
-                <p>3. What is the primary characteristic of <em>ransomware</em>?</p>
-                <ul>
-                    <li><label><input type="radio" name="q3" value="encrypt" id="q3-correct"> It encrypts your files and demands payment for the decryption key</label></li>
-                    <li><label><input type="radio" name="q3" value="replicate"> It self-replicates across the network to spread to other systems</label></li>
-                    <li><label><input type="radio" name="q3" value="keylog"> It secretly logs your keystrokes to steal sensitive information</label></li>
-                    <li><label><input type="radio" name="q3" value="adware"> It bombards you with unwanted advertisements</label></li>
-                </ul>
-                <button onclick="checkQ3()">Check Answer</button>
-                <div id="result3" class="quiz-result"></div>
-            </div>
+    <!-- Final Prep -->
+    <details id="final_prep">
+        <summary>Final Prep</summary>
+        <div class="section-content">
+            <ul>
+                <li>Practice Test 1 — Core 2 Practice Exam</li>
+                <li>Bonus Video <span class="time">7 min</span></li>
+            </ul>
+            <div class="note">Score your practice test, log weak areas, and do a focused 30–60 min refresh on those only.</div>
+            <div class="section-done"><input type="checkbox" id="final_prep-done"><label for="final_prep-done">Mark Final Prep complete</label></div>
         </div>
     </details>
 
-    <div id="congrats">🎉 All tasks completed! You're ready for the exam. Great job! 🎉</div>
+    <div id="congrats">🎉 All sections completed! You’re ready for the exam. 🎉</div>
 </main>
 
 <script>
-    // Set your exam date (year, monthIndex (0-based), day)
-    // Example: new Date(2025, 7, 31) for August 31, 2025
-    const examDate = null; // set to Date object or leave null if not set
+    // Optional: set exam date or leave null
+    const examDate = null; // e.g., new Date(2025, 7, 31) // Aug is monthIndex 7
+
     function updateCountdown() {
-        const countdownElem = document.getElementById('countdown');
-        if (!countdownElem) return;
+        const el = document.getElementById('countdown');
+        if (!el) return;
         if (examDate instanceof Date) {
             const now = new Date();
             const diffMs = examDate - now;
-            const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-            if (diffDays >= 0) {
-                countdownElem.textContent = diffDays + " day(s) until exam";
+            const diffDays = Math.ceil(diffMs / (1000*60*60*24));
+            if (!isNaN(diffDays)) {
+                el.textContent = diffDays >= 0 ? `${diffDays} day(s) until exam` : `Exam date: ${examDate.toDateString()}`;
             } else {
-                countdownElem.textContent = "Exam date: " + examDate.toDateString();
+                el.textContent = "";
             }
         } else {
-            countdownElem.textContent = "";
+            el.textContent = "";
         }
     }
 
-    // Load saved checkbox progress from localStorage
+    // Persisted progress
     const savedProgress = JSON.parse(localStorage.getItem('aplusProgress') || '{}');
-    for (let tid in savedProgress) {
-        if (savedProgress[tid] === true) {
-            const checkbox = document.getElementById(tid);
-            if (checkbox) checkbox.checked = true;
-        }
-    }
 
-    // Update progress bar and text
+    // Restore any saved checkboxes
+    window.addEventListener('DOMContentLoaded', () => {
+        for (let id in savedProgress) {
+            if (savedProgress[id] === true) {
+                const cb = document.getElementById(id);
+                if (cb) cb.checked = true;
+            }
+        }
+        // Attach listeners
+        document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                savedProgress[cb.id] = cb.checked;
+                localStorage.setItem('aplusProgress', JSON.stringify(savedProgress));
+                updateProgressBar();
+            });
+        });
+        updateProgressBar();
+        updateCountdown();
+    });
+
     function updateProgressBar() {
         const checkboxes = document.querySelectorAll('input[type=checkbox]');
         const totalTasks = checkboxes.length;
-        let completedTasks = 0;
-        checkboxes.forEach(cb => { if (cb.checked) completedTasks++; });
-        const percent = Math.floor((completedTasks / totalTasks) * 100);
+        let completed = 0;
+        checkboxes.forEach(cb => { if (cb.checked) completed++; });
+        const percent = totalTasks > 0 ? Math.floor((completed / totalTasks) * 100) : 0;
+
         const bar = document.getElementById('progress-bar');
         const text = document.getElementById('progress-text');
         if (bar && text) {
             bar.style.width = percent + '%';
-            text.textContent = completedTasks + '/' + totalTasks + ' tasks done (' + percent + '%)';
+            text.textContent = totalTasks > 0
+                ? `${completed}/${totalTasks} sections done (${percent}%)`
+                : `0% complete`;
         }
-        // Show congrats message if all done
         const congrats = document.getElementById('congrats');
-        if (congrats) {
-            if (completedTasks === totalTasks) {
-                congrats.style.display = 'block';
-            } else {
-                congrats.style.display = 'none';
-            }
-        }
+        if (congrats) congrats.style.display = (totalTasks > 0 && completed === totalTasks) ? 'block' : 'none';
     }
-
-    // Save progress on each checkbox toggle and update progress bar
-    document.querySelectorAll('input[type=checkbox]').forEach(cb => {
-        cb.addEventListener('change', () => {
-            savedProgress[cb.id] = cb.checked;
-            localStorage.setItem('aplusProgress', JSON.stringify(savedProgress));
-            updateProgressBar();
-        });
-    });
-
-    // Glossary search filter
-    const searchInput = document.getElementById('glossary-search');
-    const glossaryList = document.getElementById('glossary-list');
-    if (searchInput && glossaryList) {
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            const terms = glossaryList.getElementsByTagName('li');
-            for (let term of terms) {
-                const text = term.textContent.toLowerCase();
-                term.style.display = text.includes(query) ? '' : 'none';
-            }
-        });
-    }
-
-    // Quiz answer checking functions
-    function checkQ1() {
-        const result = document.getElementById('result1');
-        const correct = document.getElementById('q1-correct');
-        const selected = document.querySelector('input[name="q1"]:checked');
-        if (!selected) {
-            result.textContent = "Please select an answer.";
-            result.style.color = '#b50';
-        } else if (correct.checked) {
-            result.textContent = "Correct! RDP uses TCP port 3389.";
-            result.style.color = 'green';
-        } else {
-            result.textContent = "Incorrect. RDP runs on port 3389.";
-            result.style.color = 'red';
-        }
-    }
-    function checkQ2() {
-        const result = document.getElementById('result2');
-        const correct = document.getElementById('q2-correct');
-        const selected = document.querySelector('input[name="q2"]:checked');
-        if (!selected) {
-            result.textContent = "Please select an answer.";
-            result.style.color = '#b50';
-        } else if (correct.checked) {
-            result.textContent = "Correct! SFC (System File Checker) fixes corrupted system files.";
-            result.style.color = 'green';
-        } else {
-            result.textContent = "Incorrect. The correct answer is SFC.";
-            result.style.color = 'red';
-        }
-    }
-    function checkQ3() {
-        const result = document.getElementById('result3');
-        const correct = document.getElementById('q3-correct');
-        const selected = document.querySelector('input[name="q3"]:checked');
-        if (!selected) {
-            result.textContent = "Please select an answer.";
-            result.style.color = '#b50';
-        } else if (correct.checked) {
-            result.textContent = "Correct! Ransomware encrypts files and demands a ransom.";
-            result.style.color = 'green';
-        } else {
-            result.textContent = "Incorrect. Ransomware encrypts your files and demands payment.";
-            result.style.color = 'red';
-        }
-    }
-
-    // Initialize progress bar and countdown on page load
-    updateProgressBar();
-    updateCountdown();
 </script>
 
 </body>
