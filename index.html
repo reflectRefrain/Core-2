@@ -39,25 +39,15 @@
   .copy{cursor:pointer;border:1px dashed #35527a;border-radius:8px;padding:2px 6px;margin-left:6px}
   .footer{opacity:.7;font-size:12px;padding:20px 0}
   .chip{background:#0f1a26;border:1px solid #1d2c3f;border-radius:10px;padding:8px 10px}
+  /* Header glossary results container */
+  .hdr-results{margin-top:8px}
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
-    <div class="row" style="justify-content:space-between">
-      <div>
-        <h1>A+ 220-1102 • Andrew Ramdayal Course Tracker</h1>
-        <div class="sub">Plan: <span class="pill">Andrew Ramdayal (Udemy)</span> <span class="pill">Jason Dion Practice Exams</span></div>
-      </div>
-      <div class="row">
-        <button class="btn brand" id="exportBtn">Export</button>
-        <label class="btn" for="importFile">Import</label>
-        <input id="importFile" type="file" accept="application/json" style="display:none">
-        <button class="btn" id="resetBtn">Reset</button>
-      </div>
-    </div>
-
-    <div class="grid" style="margin-top:12px">
+    <!-- Slim header: progress + date + next-up + glossary search -->
+    <div class="grid" style="margin-top:0">
       <div class="card">
         <div class="row" style="justify-content:space-between;align-items:center">
           <div class="row">
@@ -71,9 +61,16 @@
             </label>
           </div>
         </div>
+
         <div class="progress" style="margin-top:10px"><div class="bar" id="bar"></div></div>
         <div class="sub" id="countdown" style="margin-top:8px"></div>
         <div class="sub" id="nextUp" style="margin-top:4px;color:#b7f5ff"></div>
+
+        <!-- Glossary search in header -->
+        <div class="row" style="margin-top:10px">
+          <input id="searchHeader" placeholder="Glossary search… (commands, acronyms, policies)" style="flex:1;background:#0d131c;border:1px solid #1b2736;color:var(--text);border-radius:10px;padding:10px">
+        </div>
+        <div id="resultsHeader" class="list hdr-results"></div>
       </div>
     </div>
   </div>
@@ -491,7 +488,6 @@ const examDomain = [...document.querySelectorAll('select[data-exam-domain]')];
 
 /* ===================== WEIGHTED PROGRESS ===================== */
 function weightedProgress(){
-  // For each domain, compute completion ratio of its items
   const domainStats = {};
   COURSE_MAP.forEach((s, si)=>{
     const items = s.items.length;
@@ -525,7 +521,7 @@ function markStreak(){
 /* ===================== SYNC UI ===================== */
 function totalItemsCount(){
   const planCount = COURSE_MAP.reduce((a,s)=>a+s.items.length,0);
-  const miscCount = PBQ_TASKS.length + FINAL_48.length + EXAMS.length; // we’ll treat each exam completion as an item
+  const miscCount = PBQ_TASKS.length + FINAL_48.length + EXAMS.length;
   return planCount + miscCount;
 }
 function doneItemsCount(){
@@ -537,11 +533,8 @@ function doneItemsCount(){
 }
 
 function syncUI(){
-  // checks
   planChecks.forEach(c=> c.checked = !!state.checks[c.dataset.k]);
-  // section notes
   planNotes.forEach(t=> t.value = state.notes[t.dataset.note] ?? '');
-  // exams
   examScores.forEach(e=>{
     const k=e.dataset.examScore;
     e.value = state.exams[k]?.score ?? '';
@@ -559,21 +552,15 @@ function syncUI(){
     s.value = state.exams[k]?.domain ?? '';
   });
 
-  // progress
   const weighted = weightedProgress();
   const pctEl = document.getElementById('pct');
   pctEl.textContent = weighted+'%';
   document.getElementById('bar').style.width = weighted+'%';
   document.getElementById('doneCount').textContent = doneItemsCount();
   document.getElementById('totalCount').textContent = totalItemsCount();
-
-  // streak
   document.getElementById('streak').textContent = state.streak||0;
 
-  // next up suggestion
   nextSuggestion();
-
-  // countdown
   renderCountdown();
 }
 syncUI();
@@ -615,23 +602,32 @@ document.addEventListener('change', (e)=>{
   }
 });
 
-/* Export/Import/Reset */
-document.getElementById('exportBtn').onclick=()=>{
-  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='a1102_andrew_progress.json';a.click();
-  URL.revokeObjectURL(url);
-};
-document.getElementById('importFile').onchange=(e)=>{
-  const f=e.target.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{ try{ const obj=JSON.parse(r.result); Object.assign(state,obj); save(); location.reload(); }catch(err){alert('Invalid JSON');} };
-  r.readAsText(f);
-};
-document.getElementById('resetBtn').onclick=()=>{
-  if(confirm('Clear all saved progress?')){ localStorage.removeItem(KEY); location.reload(); }
-};
+/* Export/Import/Reset: safely no-op if elements don’t exist */
+const exportBtn = document.getElementById('exportBtn');
+if(exportBtn){
+  exportBtn.onclick=()=>{
+    const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download='a1102_andrew_progress.json';a.click();
+    URL.revokeObjectURL(url);
+  };
+}
+const importFile = document.getElementById('importFile');
+if(importFile){
+  importFile.onchange=(e)=>{
+    const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>{ try{ const obj=JSON.parse(r.result); Object.assign(state,obj); save(); location.reload(); }catch(err){alert('Invalid JSON');} };
+    r.readAsText(f);
+  };
+}
+const resetBtn = document.getElementById('resetBtn');
+if(resetBtn){
+  resetBtn.onclick=()=>{
+    if(confirm('Clear all saved progress?')){ localStorage.removeItem(KEY); location.reload(); }
+  };
+}
 
 /* Countdown */
 function renderCountdown(){
@@ -645,7 +641,6 @@ function renderCountdown(){
 
 /* Next-Up (sequential by course order) */
 function nextSuggestion(){
-  // first unchecked section item in COURSE_MAP order
   for(let si=0; si<COURSE_MAP.length; si++){
     const s=COURSE_MAP[si];
     for(let ii=0; ii<s.items.length; ii++){
@@ -655,7 +650,6 @@ function nextSuggestion(){
       }
     }
   }
-  // else exams, then pbq, then final
   for(const l of EXAMS){
     if(!state.exams[`dion${l}`]?.done){
       document.getElementById('nextUp').textContent = `Next up: Jason Dion Exam ${l} (timed)`;
@@ -706,7 +700,6 @@ function fcInit(){
     document.getElementById('fcStatus').textContent='';
     return;
   }
-  // initialize unknown as indices of pool
   if(!state.fc.unknown.length && !state.fc.known.length){
     state.fc.unknown = pool.map((_,i)=>i);
     state.fc.known = []; state.fc.i=0; state.fc.showBack=false; save();
@@ -741,7 +734,6 @@ function fcMove(toKnown){
   const cur = fcCurrent(); if(!cur) return;
   const activeUnknown = state.fc.unknown;
   const activeKnown = state.fc.known;
-  // remove from pools
   state.fc.unknown = activeUnknown.filter(i=>i!==activeUnknown[state.fc.i]);
   state.fc.known   = activeKnown.filter(i=>i!==activeUnknown[state.fc.i]);
   (toKnown? state.fc.known: state.fc.unknown).push(cur.pool.indexOf(cur.card));
@@ -774,14 +766,23 @@ const GLOSSARY = [
  {k:'mfa',v:'Multi-factor auth: know/have/are.'},
  {k:'sla',v:'Service Level Agreement — uptime/response guarantees.'},
 ];
-const resEl=document.getElementById('results');
-document.getElementById('search').addEventListener('input', e=>{
-  const q=e.target.value.toLowerCase().trim();
-  resEl.innerHTML=''; if(!q) return;
-  GLOSSARY.filter(x=>x.k.includes(q)||x.v.toLowerCase().includes(q)).slice(0,12).forEach(x=>{
-    const row=document.createElement('div'); row.className='chip'; row.innerHTML = `<b>${x.k}</b> — ${x.v}`; resEl.appendChild(row);
+
+function wireGlossarySearch(inputId, resultsId){
+  const inputEl = document.getElementById(inputId);
+  const resEl = document.getElementById(resultsId);
+  if(!inputEl || !resEl) return;
+  inputEl.addEventListener('input', e=>{
+    const q=e.target.value.toLowerCase().trim();
+    resEl.innerHTML=''; if(!q) return;
+    GLOSSARY.filter(x=>x.k.includes(q)||x.v.toLowerCase().includes(q)).slice(0,12).forEach(x=>{
+      const row=document.createElement('div'); row.className='chip';
+      row.innerHTML = `<b>${x.k}</b> — ${x.v}`;
+      resEl.appendChild(row);
+    });
   });
-});
+}
+wireGlossarySearch('search','results');        // existing card search
+wireGlossarySearch('searchHeader','resultsHeader'); // new header search
 
 /* ===================== COPY BUTTONS ===================== */
 document.querySelectorAll('.copy').forEach(btn=>{
